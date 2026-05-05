@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: agroconnect_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER:     agrouser
+      POSTGRES_PASSWORD: agropass
+      POSTGRES_DB:       agroconnect
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agrouser -d agroconnect"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Backend (FastAPI) ────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agroconnect_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL:                postgresql://agrouser:agropass@db:5432/agroconnect
+      SECRET_KEY:                  change-me-in-production-super-secret-key-32chars
+      ALGORITHM:                   HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 43200
+      ALLOWED_ORIGINS:             http://localhost:5173,http://localhost:80
+      DEBUG:                       "false"
+    volumes:
+      - ./ml:/app/ml          # mount ML models directory
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+        python -c 'from app.db.database import Base, engine; from app.models import User, Product, Order; Base.metadata.create_all(bind=engine)' &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+      "
+
+  # ── Frontend (Vite / Nginx) ──────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: agroconnect_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    environment:
+      VITE_API_URL: http://localhost:8000/api/v1
+
+volumes:
+  pgdata:

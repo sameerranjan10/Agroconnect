@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-earth-50 text-stone-800 antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45,155,90,0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,131,42,0.06), transparent);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-forest-600 hover:bg-forest-700 text-white font-medium px-5 py-2.5 rounded-xl
+           transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply bg-earth-100 hover:bg-earth-200 text-earth-800 font-medium px-5 py-2.5 rounded-xl
+           transition-all duration-200 active:scale-95 border border-earth-200;
+  }
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2.5 rounded-xl
+           transition-all duration-200 active:scale-95;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-earth-100 shadow-sm
+           hover:shadow-md transition-shadow duration-200;
+  }
+  .input {
+    @apply w-full bg-earth-50 border border-earth-200 rounded-xl px-4 py-2.5 text-stone-800
+           placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-400
+           focus:border-transparent transition-all duration-150;
+  }
+  .label {
+    @apply block text-sm font-medium text-stone-600 mb-1.5;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+  .section-title {
+    @apply font-display text-3xl font-bold text-stone-800;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: #f9eedb; }
+::-webkit-scrollbar-thumb  { background: #d9a048; border-radius: 3px; }
+
+/* Page transition */
+.page-enter { animation: slideUp 0.35s ease-out; }
