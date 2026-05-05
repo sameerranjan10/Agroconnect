@@ -1,7 +1,7 @@
 /**
  * AgroConnect - Navbar
  */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -10,6 +10,18 @@ export default function Navbar() {
   const navigate  = useNavigate()
   const location  = useLocation()
   const [open, setOpen] = useState(false)
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
 
   const handleLogout = () => { logout(); navigate('/') }
 
@@ -19,7 +31,7 @@ export default function Navbar() {
       <Link
         to={to}
         className={`text-sm font-medium transition-colors duration-150 ${
-          active ? 'text-forest-700' : 'text-stone-600 hover:text-forest-700'
+          active ? 'text-forest-700 dark:text-forest-400' : 'text-stone-600 hover:text-forest-700 dark:text-stone-300 dark:hover:text-forest-400'
         }`}
         onClick={() => setOpen(false)}
       >
@@ -29,14 +41,14 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-earth-100 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-earth-100 dark:border-stone-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <span className="text-2xl">🌱</span>
-            <span className="font-display font-bold text-xl text-stone-800 group-hover:text-forest-700 transition-colors">
+            <span className="font-display font-bold text-xl text-stone-800 dark:text-stone-100 group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
               AgroConnect
             </span>
           </Link>
@@ -51,14 +63,23 @@ export default function Navbar() {
 
           {/* Desktop auth */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-stone-600 hover:bg-earth-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+
             {isAuth ? (
               <>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-earth-50 rounded-lg border border-earth-100">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-earth-50 dark:bg-stone-800 rounded-lg border border-earth-100 dark:border-stone-700">
                   <div className={`w-2 h-2 rounded-full ${user?.role === 'FARMER' ? 'bg-forest-500' : 'bg-sky-500'}`} />
-                  <span className="text-sm font-medium text-stone-700 max-w-[120px] truncate">
+                  <span className="text-sm font-medium text-stone-700 dark:text-stone-200 max-w-[120px] truncate">
                     {user?.name}
                   </span>
-                  <span className="badge bg-earth-100 text-earth-700 text-[10px]">
+                  <span className="badge bg-earth-100 text-earth-700 dark:bg-stone-700 dark:text-stone-300 text-[10px]">
                     {user?.role}
                   </span>
                 </div>
@@ -74,26 +95,34 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-lg hover:bg-earth-100 transition-colors"
-          >
-            <div className={`w-5 h-0.5 bg-stone-700 transition-all ${open ? 'rotate-45 translate-y-1.5' : ''}`} />
-            <div className={`w-5 h-0.5 bg-stone-700 my-1 transition-all ${open ? 'opacity-0' : ''}`} />
-            <div className={`w-5 h-0.5 bg-stone-700 transition-all ${open ? '-rotate-45 -translate-y-1.5' : ''}`} />
-          </button>
+          {/* Mobile hamburger & Theme Toggle */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-stone-600 hover:bg-earth-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors"
+            >
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className="p-2 rounded-lg hover:bg-earth-100 dark:hover:bg-stone-800 transition-colors"
+            >
+              <div className={`w-5 h-0.5 bg-stone-700 dark:bg-stone-300 transition-all ${open ? 'rotate-45 translate-y-1.5' : ''}`} />
+              <div className={`w-5 h-0.5 bg-stone-700 dark:bg-stone-300 my-1 transition-all ${open ? 'opacity-0' : ''}`} />
+              <div className={`w-5 h-0.5 bg-stone-700 dark:bg-stone-300 transition-all ${open ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-earth-100 bg-white px-4 py-4 space-y-3">
+        <div className="md:hidden border-t border-earth-100 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 py-4 space-y-3">
           {navLink('/', 'Home')}
           {navLink('/marketplace', 'Marketplace')}
           {isAuth && user?.role === 'FARMER' && navLink('/dashboard', 'Dashboard')}
           {isAuth && navLink('/ai-tools', 'AI Tools')}
-          <div className="pt-2 border-t border-earth-100 space-y-2">
+          <div className="pt-2 border-t border-earth-100 dark:border-stone-800 space-y-2">
             {isAuth ? (
               <button onClick={handleLogout} className="w-full btn-secondary text-sm">Logout</button>
             ) : (

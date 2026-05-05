@@ -43,8 +43,8 @@ export default function Register() {
 
         <div className="text-center mb-8">
           <span className="text-5xl">🌱</span>
-          <h1 className="font-display text-3xl font-bold text-stone-800 mt-3">Create your account</h1>
-          <p className="text-stone-500 mt-2">Join the smart agriculture revolution</p>
+          <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100 mt-3">Create your account</h1>
+          <p className="text-stone-500 dark:text-stone-400 mt-2">Join the smart agriculture revolution</p>
         </div>
 
         <div className="card p-8">
@@ -60,9 +60,9 @@ export default function Register() {
                   className={`py-3 rounded-xl border-2 font-medium text-sm transition-all ${
                     form.role === role
                       ? role === 'FARMER'
-                        ? 'border-forest-500 bg-forest-50 text-forest-700'
-                        : 'border-sky-500 bg-sky-50 text-sky-700'
-                      : 'border-earth-200 text-stone-500 hover:border-earth-300'
+                        ? 'border-forest-500 bg-forest-50 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400'
+                        : 'border-sky-500 bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400'
+                      : 'border-earth-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-earth-300 dark:hover:border-stone-600'
                   }`}
                 >
                   {role === 'FARMER' ? '👨‍🌾 Farmer' : '🛒 Buyer'}
@@ -146,9 +146,9 @@ export default function Register() {
             </button>
           </form>
 
-          <p className="text-center text-stone-500 text-sm mt-6">
+          <p className="text-center text-stone-500 dark:text-stone-400 text-sm mt-6">
             Already have an account?{' '}
-            <Link to="/login" className="text-forest-600 font-medium hover:underline">
+            <Link to="/login" className="text-forest-600 dark:text-forest-400 font-medium hover:underline">
               Sign in
             </Link>
           </p>

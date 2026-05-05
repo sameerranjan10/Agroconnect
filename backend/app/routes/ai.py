@@ -4,65 +4,77 @@ POST /ai/recommend-crop   → crop recommendation
 POST /ai/predict-price    → price prediction
 GET  /ai/health           → model health check
 """
-import os
+print("🔥 NEW AI.PY LOADED")
 import sys
 from pathlib import Path
-
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.ai_schemas import (
     CropRecommendationRequest, CropRecommendationResponse,
-    PricePredictionRequest,    PricePredictionResponse,
+    PricePredictionRequest, PricePredictionResponse,
 )
 
-# Add ml/ directory to path so we can import inference modules
-ML_DIR = Path(__file__).resolve().parents[4] / "ml"
-sys.path.insert(0, str(ML_DIR))
+# ─────────────────────────────────────────────
+# 🔧 Add ML path (robust, works everywhere)
+# ─────────────────────────────────────────────
+BASE_DIR = Path(__file__).resolve()
 
+ML_DIR = None
+for parent in BASE_DIR.parents:
+    possible = parent / "ml"
+    if possible.exists():
+        ML_DIR = possible
+        sys.path.append(str(ML_DIR))
+        print(f"✅ ML path set: {ML_DIR}")
+        break
+
+if ML_DIR is None:
+    print("❌ ML directory NOT found")
+
+# ─────────────────────────────────────────────
+# 🚀 DIRECT IMPORT (NO lazy loading, NO bugs)
+# ─────────────────────────────────────────────
+try:
+    from inference.crop_inference import predict_crop
+    print("✅ Crop model ready")
+except Exception as e:
+    predict_crop = None
+    print("❌ Crop import failed:", e)
+
+try:
+    from inference.price_inference import predict_price
+    print("✅ Price model ready")
+except Exception as e:
+    predict_price = None
+    print("❌ Price import failed:", e)
+
+# ─────────────────────────────────────────────
 router = APIRouter(prefix="/ai", tags=["AI / ML"])
 
-
-def _load_crop_model():
-    try:
-        from inference.crop_inference import predict_crop
-        return predict_crop
-    except Exception as e:
-        return None
-
-
-def _load_price_model():
-    try:
-        from inference.price_inference import predict_price
-        return predict_price
-    except Exception as e:
-        return None
-
-
+# ─────────────────────────────────────────────
+# 🧪 Health Check
+# ─────────────────────────────────────────────
 @router.get("/health")
 def ai_health():
-    """Check whether ML models are loaded and ready."""
-    crop_ok  = _load_crop_model()  is not None
-    price_ok = _load_price_model() is not None
     return {
-        "crop_model_ready":  crop_ok,
-        "price_model_ready": price_ok,
-        "status": "ok" if (crop_ok and price_ok) else "degraded",
+        "crop_model_ready": predict_crop is not None,
+        "price_model_ready": predict_price is not None,
+        "status": "ok" if (predict_crop and predict_price) else "degraded",
     }
 
-
+# ─────────────────────────────────────────────
+# 🌱 Crop Recommendation
+# ─────────────────────────────────────────────
 @router.post("/recommend-crop", response_model=CropRecommendationResponse)
 def recommend_crop(payload: CropRecommendationRequest):
-    """
-    Recommend a crop based on soil and weather conditions.
-    Uses a trained Random Forest classifier.
-    """
-    predict_fn = _load_crop_model()
-    if predict_fn is None:
+
+    if predict_crop is None:
         raise HTTPException(
             status_code=503,
-            detail="Crop recommendation model not available. Run ml/training/train_crop.py first.",
+            detail="Crop recommendation model not available",
         )
-    result = predict_fn(
+
+    result = predict_crop(
         nitrogen=payload.nitrogen,
         phosphorus=payload.phosphorus,
         potassium=payload.potassium,
@@ -71,26 +83,27 @@ def recommend_crop(payload: CropRecommendationRequest):
         ph=payload.ph,
         rainfall=payload.rainfall,
     )
+
     return CropRecommendationResponse(**result)
 
-
+# ─────────────────────────────────────────────
+# 💰 Price Prediction
+# ─────────────────────────────────────────────
 @router.post("/predict-price", response_model=PricePredictionResponse)
 def predict_price_endpoint(payload: PricePredictionRequest):
-    """
-    Predict market price for a given crop.
-    Uses a trained Gradient Boosting regressor.
-    """
-    predict_fn = _load_price_model()
-    if predict_fn is None:
+
+    if predict_price is None:
         raise HTTPException(
             status_code=503,
-            detail="Price prediction model not available. Run ml/training/train_price.py first.",
+            detail="Price prediction model not available",
         )
-    result = predict_fn(
+
+    result = predict_price(
         crop_type=payload.crop_type,
         location=payload.location,
         quantity=payload.quantity,
         season=payload.season,
         quality=payload.quality,
     )
+
     return PricePredictionResponse(**result)

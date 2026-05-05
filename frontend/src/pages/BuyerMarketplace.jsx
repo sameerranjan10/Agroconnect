@@ -11,11 +11,11 @@ import toast from 'react-hot-toast'
 
 const CATEGORIES = ['All', 'Grain', 'Vegetable', 'Fruit', 'Cash', 'Pulse', 'Spice']
 const STATUS_COLORS = {
-  PENDING:   'bg-amber-100 text-amber-700',
-  CONFIRMED: 'bg-sky-100 text-sky-700',
-  SHIPPED:   'bg-purple-100 text-purple-700',
-  DELIVERED: 'bg-forest-100 text-forest-700',
-  CANCELLED: 'bg-red-100 text-red-700',
+  PENDING:   'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  CONFIRMED: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400',
+  SHIPPED:   'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+  DELIVERED: 'bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-400',
+  CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 }
 
 export default function BuyerMarketplace() {
@@ -66,21 +66,21 @@ export default function BuyerMarketplace() {
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="font-display text-3xl font-bold text-stone-800">Marketplace 🛒</h1>
-        <p className="text-stone-500 mt-1">
+        <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100">Marketplace 🛒</h1>
+        <p className="text-stone-500 dark:text-stone-400 mt-1">
           {total} products available directly from farmers across India
         </p>
       </div>
 
       {/* Tabs (only for buyers) */}
       {isAuth && user?.role === 'BUYER' && (
-        <div className="flex gap-1 mb-6 bg-earth-100 p-1 rounded-xl w-fit">
+        <div className="flex gap-1 mb-6 bg-earth-100 dark:bg-stone-800 p-1 rounded-xl w-fit">
           {[{ key: 'browse', label: '🌾 Browse' }, { key: 'orders', label: '📦 My Orders' }].map(t => (
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                tab === t.key ? 'bg-white text-sky-700 shadow-sm' : 'text-stone-500 hover:text-stone-700'
+                tab === t.key ? 'bg-white dark:bg-stone-700 text-sky-700 dark:text-sky-400 shadow-sm' : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'
               }`}
             >
               {t.label}
@@ -110,8 +110,8 @@ export default function BuyerMarketplace() {
                   onClick={() => setCategory(c)}
                   className={`px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
                     category === c
-                      ? 'bg-forest-600 text-white'
-                      : 'bg-white border border-earth-200 text-stone-600 hover:border-forest-400'
+                      ? 'bg-forest-600 dark:bg-forest-700 text-white'
+                      : 'bg-white dark:bg-stone-800 border border-earth-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:border-forest-400 dark:hover:border-forest-500'
                   }`}
                 >
                   {c}
@@ -125,7 +125,7 @@ export default function BuyerMarketplace() {
           ) : products.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-3">🌾</div>
-              <p className="text-stone-500">No products found. Try adjusting your search.</p>
+              <p className="text-stone-500 dark:text-stone-400">No products found. Try adjusting your search.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -141,8 +141,8 @@ export default function BuyerMarketplace() {
 
           {!isAuth && (
             <div className="mt-8 card p-6 text-center max-w-md mx-auto">
-              <p className="text-stone-600 font-medium">Ready to buy?</p>
-              <p className="text-stone-400 text-sm mt-1 mb-4">Create a buyer account to place orders directly with farmers.</p>
+              <p className="text-stone-600 dark:text-stone-300 font-medium">Ready to buy?</p>
+              <p className="text-stone-400 dark:text-stone-500 text-sm mt-1 mb-4">Create a buyer account to place orders directly with farmers.</p>
               <a href="/register?role=BUYER" className="btn-primary inline-block">
                 Sign up as Buyer →
               </a>
@@ -157,7 +157,7 @@ export default function BuyerMarketplace() {
           {orders.length === 0 && (
             <div className="card p-12 text-center">
               <div className="text-5xl mb-3">📦</div>
-              <p className="text-stone-500">No orders yet. Browse the marketplace and place your first order!</p>
+              <p className="text-stone-500 dark:text-stone-400">No orders yet. Browse the marketplace and place your first order!</p>
               <button onClick={() => setTab('browse')} className="btn-primary mt-4">Browse Products</button>
             </div>
           )}
@@ -165,26 +165,26 @@ export default function BuyerMarketplace() {
             <div key={o.id} className="card p-4 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-semibold text-stone-800">Order #{o.id}</h3>
+                  <h3 className="font-semibold text-stone-800 dark:text-stone-100">Order #{o.id}</h3>
                   <span className={`badge ${STATUS_COLORS[o.status]}`}>{o.status}</span>
                 </div>
-                <p className="text-sm text-stone-600 mt-1 font-medium">
+                <p className="text-sm text-stone-600 dark:text-stone-300 mt-1 font-medium">
                   {o.product?.title}
                 </p>
-                <p className="text-sm text-stone-500">
+                <p className="text-sm text-stone-500 dark:text-stone-400">
                   {o.quantity} {o.product?.unit} · ₹{o.total_price}
                 </p>
                 {o.product?.farmer && (
-                  <p className="text-xs text-stone-400 mt-0.5">
+                  <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">
                     Farmer: {o.product.farmer.name} · {o.product.farmer.location}
                   </p>
                 )}
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">
                   {new Date(o.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </p>
               </div>
               <div className="text-right">
-                <div className="text-xl font-bold text-forest-700">₹{o.total_price}</div>
+                <div className="text-xl font-bold text-forest-700 dark:text-forest-400">₹{o.total_price}</div>
               </div>
             </div>
           ))}

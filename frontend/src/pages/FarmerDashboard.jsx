@@ -12,11 +12,11 @@ const UNITS      = ['kg', 'quintal', 'tonne', 'litre', 'piece', 'dozen', 'bag']
 const ORDER_STATUS = ['PENDING','CONFIRMED','SHIPPED','DELIVERED','CANCELLED']
 
 const STATUS_COLORS = {
-  PENDING:   'bg-amber-100 text-amber-700',
-  CONFIRMED: 'bg-sky-100 text-sky-700',
-  SHIPPED:   'bg-purple-100 text-purple-700',
-  DELIVERED: 'bg-forest-100 text-forest-700',
-  CANCELLED: 'bg-red-100 text-red-700',
+  PENDING:   'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  CONFIRMED: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400',
+  SHIPPED:   'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+  DELIVERED: 'bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-400',
+  CANCELLED: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 }
 
 const EMPTY_FORM = {
@@ -116,30 +116,30 @@ export default function FarmerDashboard() {
 
       {/* Header */}
       <div className="mb-8">
-        <h1 className="font-display text-3xl font-bold text-stone-800">
+        <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100">
           Farmer Dashboard 👨‍🌾
         </h1>
-        <p className="text-stone-500 mt-1">Welcome back, {user?.name}</p>
+        <p className="text-stone-500 dark:text-stone-400 mt-1">Welcome back, {user?.name}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
-          { label: 'My Products',   value: products.length,          icon: '🌾', color: 'text-forest-600' },
-          { label: 'Total Orders',  value: orders.length,            icon: '📦', color: 'text-sky-600'    },
-          { label: 'Pending',       value: pendingOrders,            icon: '⏳', color: 'text-amber-600'  },
-          { label: 'Revenue (₹)',   value: totalRevenue.toFixed(0),  icon: '💰', color: 'text-purple-600' },
+          { label: 'My Products',   value: products.length,          icon: '🌾', color: 'text-forest-600 dark:text-forest-400' },
+          { label: 'Total Orders',  value: orders.length,            icon: '📦', color: 'text-sky-600 dark:text-sky-400'    },
+          { label: 'Pending',       value: pendingOrders,            icon: '⏳', color: 'text-amber-600 dark:text-amber-400'  },
+          { label: 'Revenue (₹)',   value: totalRevenue.toFixed(0),  icon: '💰', color: 'text-purple-600 dark:text-purple-400' },
         ].map(s => (
           <div key={s.label} className="card p-4">
             <div className="text-2xl mb-1">{s.icon}</div>
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
-            <div className="text-stone-500 text-sm">{s.label}</div>
+            <div className="text-stone-500 dark:text-stone-400 text-sm">{s.label}</div>
           </div>
         ))}
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-earth-100 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 mb-6 bg-earth-100 dark:bg-stone-800 p-1 rounded-xl w-fit">
         {[
           { key: 'products', label: '🌾 My Products' },
           { key: 'orders',   label: '📦 Orders' },
@@ -149,7 +149,7 @@ export default function FarmerDashboard() {
             key={t.key}
             onClick={() => { setTab(t.key); if (t.key !== 'add') { setEditId(null); setForm(EMPTY_FORM) } }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              tab === t.key ? 'bg-white text-forest-700 shadow-sm' : 'text-stone-500 hover:text-stone-700'
+              tab === t.key ? 'bg-white dark:bg-stone-700 text-forest-700 dark:text-forest-400 shadow-sm' : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'
             }`}
           >
             {t.label}
@@ -163,7 +163,7 @@ export default function FarmerDashboard() {
           {products.length === 0 && (
             <div className="card p-12 text-center">
               <div className="text-5xl mb-3">🌾</div>
-              <p className="text-stone-500">No products yet. Start by adding your first listing!</p>
+              <p className="text-stone-500 dark:text-stone-400">No products yet. Start by adding your first listing!</p>
               <button onClick={() => setTab('add')} className="btn-primary mt-4">Add Product</button>
             </div>
           )}
@@ -171,13 +171,13 @@ export default function FarmerDashboard() {
             <div key={p.id} className="card p-4 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-semibold text-stone-800">{p.title}</h3>
-                  <span className={`badge ${p.is_available ? 'bg-forest-100 text-forest-700' : 'bg-red-100 text-red-600'}`}>
+                  <h3 className="font-semibold text-stone-800 dark:text-stone-100">{p.title}</h3>
+                  <span className={`badge ${p.is_available ? 'bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-400' : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'}`}>
                     {p.is_available ? 'Active' : 'Unavailable'}
                   </span>
-                  {p.category && <span className="badge bg-earth-100 text-earth-700">{p.category}</span>}
+                  {p.category && <span className="badge bg-earth-100 text-earth-700 dark:bg-stone-700 dark:text-stone-300">{p.category}</span>}
                 </div>
-                <div className="flex items-center gap-4 mt-1 text-sm text-stone-500">
+                <div className="flex items-center gap-4 mt-1 text-sm text-stone-500 dark:text-stone-400">
                   <span>₹{p.price}/{p.unit}</span>
                   <span>{p.quantity} {p.unit} left</span>
                   {p.location && <span>📍 {p.location}</span>}
@@ -198,24 +198,24 @@ export default function FarmerDashboard() {
           {orders.length === 0 && (
             <div className="card p-12 text-center">
               <div className="text-5xl mb-3">📦</div>
-              <p className="text-stone-500">No orders yet. List products to start receiving orders.</p>
+              <p className="text-stone-500 dark:text-stone-400">No orders yet. List products to start receiving orders.</p>
             </div>
           )}
           {orders.map(o => (
             <div key={o.id} className="card p-4 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-semibold text-stone-800">Order #{o.id}</h3>
+                  <h3 className="font-semibold text-stone-800 dark:text-stone-100">Order #{o.id}</h3>
                   <span className={`badge ${STATUS_COLORS[o.status]}`}>{o.status}</span>
                 </div>
-                <p className="text-sm text-stone-500 mt-1">
+                <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
                   {o.product?.title} · {o.quantity} {o.product?.unit}
                 </p>
-                <p className="text-sm text-stone-600 font-medium mt-0.5">₹{o.total_price}</p>
+                <p className="text-sm text-stone-600 dark:text-stone-300 font-medium mt-0.5">₹{o.total_price}</p>
                 {o.buyer && (
-                  <p className="text-xs text-stone-400 mt-0.5">Buyer: {o.buyer.name} · {o.buyer.phone || o.buyer.email}</p>
+                  <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">Buyer: {o.buyer.name} · {o.buyer.phone || o.buyer.email}</p>
                 )}
-                {o.notes && <p className="text-xs text-stone-400 italic mt-0.5">"{o.notes}"</p>}
+                {o.notes && <p className="text-xs text-stone-400 dark:text-stone-500 italic mt-0.5">"{o.notes}"</p>}
               </div>
               <select
                 value={o.status}
@@ -232,7 +232,7 @@ export default function FarmerDashboard() {
       {/* ── Add/Edit Product Tab ─────────────────────────────────────────── */}
       {tab === 'add' && (
         <div className="card p-6 max-w-2xl">
-          <h2 className="font-display text-xl font-bold text-stone-800 mb-5">
+          <h2 className="font-display text-xl font-bold text-stone-800 dark:text-stone-100 mb-5">
             {editId ? 'Edit Product' : 'Add New Product'}
           </h2>
           <form onSubmit={handleSave} className="space-y-4">

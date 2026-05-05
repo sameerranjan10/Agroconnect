@@ -34,24 +34,24 @@ export default function OrderModal({ product, onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-slide-up">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl w-full max-w-md animate-slide-up">
         <div className="p-6">
           <div className="flex justify-between items-start mb-5">
             <div>
-              <h2 className="font-display text-xl font-bold text-stone-800">Place Order</h2>
-              <p className="text-stone-500 text-sm mt-0.5">{product.title}</p>
+              <h2 className="font-display text-xl font-bold text-stone-800 dark:text-stone-100">Place Order</h2>
+              <p className="text-stone-500 dark:text-stone-400 text-sm mt-0.5">{product.title}</p>
             </div>
-            <button onClick={onClose} className="text-stone-400 hover:text-stone-600 text-xl leading-none">×</button>
+            <button onClick={onClose} className="text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300 text-xl leading-none">×</button>
           </div>
 
-          <div className="bg-earth-50 rounded-xl p-4 mb-5 space-y-1">
+          <div className="bg-earth-50 dark:bg-stone-900/50 rounded-xl p-4 mb-5 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-stone-500">Price per {product.unit}</span>
-              <span className="font-semibold text-stone-800">₹{product.price}</span>
+              <span className="text-stone-500 dark:text-stone-400">Price per {product.unit}</span>
+              <span className="font-semibold text-stone-800 dark:text-stone-100">₹{product.price}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-stone-500">Available</span>
-              <span className="font-semibold text-stone-800">{product.quantity} {product.unit}</span>
+              <span className="text-stone-500 dark:text-stone-400">Available</span>
+              <span className="font-semibold text-stone-800 dark:text-stone-100">{product.quantity} {product.unit}</span>
             </div>
           </div>
 
@@ -81,9 +81,9 @@ export default function OrderModal({ product, onClose, onSuccess }) {
               />
             </div>
 
-            <div className="bg-forest-50 rounded-xl p-3 flex justify-between items-center">
-              <span className="text-stone-600 font-medium">Total Amount</span>
-              <span className="text-2xl font-bold text-forest-700">₹{total}</span>
+            <div className="bg-forest-50 dark:bg-forest-900/20 rounded-xl p-3 flex justify-between items-center">
+              <span className="text-stone-600 dark:text-stone-300 font-medium">Total Amount</span>
+              <span className="text-2xl font-bold text-forest-700 dark:text-forest-400">₹{total}</span>
             </div>
 
             <div className="flex gap-3 pt-1">

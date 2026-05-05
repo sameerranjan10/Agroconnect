@@ -31,15 +31,15 @@ export default function ProductDetails() {
     <div className="max-w-5xl mx-auto px-4 py-10 page-enter">
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-stone-400 mb-6">
-        <Link to="/marketplace" className="hover:text-forest-700 transition-colors">Marketplace</Link>
+      <div className="flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 mb-6">
+        <Link to="/marketplace" className="hover:text-forest-700 dark:hover:text-forest-400 transition-colors">Marketplace</Link>
         <span>/</span>
-        <span className="text-stone-700">{product.title}</span>
+        <span className="text-stone-700 dark:text-stone-300">{product.title}</span>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Image */}
-        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-forest-50 to-earth-100 flex items-center justify-center h-80 md:h-96">
+        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-forest-50 to-earth-100 dark:from-stone-800 dark:to-stone-700 flex items-center justify-center h-80 md:h-96">
           {product.image_url ? (
             <img src={product.image_url} alt={product.title} className="w-full h-full object-cover" />
           ) : (
@@ -50,46 +50,46 @@ export default function ProductDetails() {
         {/* Info */}
         <div>
           <div className="flex items-start justify-between gap-3">
-            <h1 className="font-display text-3xl font-bold text-stone-800 leading-tight">
+            <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100 leading-tight">
               {product.title}
             </h1>
-            <span className={`badge mt-1 whitespace-nowrap ${product.is_available ? 'bg-forest-100 text-forest-700' : 'bg-red-100 text-red-600'}`}>
+            <span className={`badge mt-1 whitespace-nowrap ${product.is_available ? 'bg-forest-100 text-forest-700 dark:bg-forest-900/30 dark:text-forest-400' : 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'}`}>
               {product.is_available ? '✓ In Stock' : 'Out of Stock'}
             </span>
           </div>
 
           {product.category && (
-            <span className="badge bg-earth-100 text-earth-700 mt-2">{product.category}</span>
+            <span className="badge bg-earth-100 text-earth-700 dark:bg-stone-800 dark:text-stone-300 mt-2">{product.category}</span>
           )}
 
           <div className="mt-5 flex items-end gap-2">
-            <span className="text-4xl font-bold text-forest-700">₹{product.price}</span>
-            <span className="text-stone-400 text-lg pb-0.5">per {product.unit}</span>
+            <span className="text-4xl font-bold text-forest-700 dark:text-forest-400">₹{product.price}</span>
+            <span className="text-stone-400 dark:text-stone-500 text-lg pb-0.5">per {product.unit}</span>
           </div>
 
-          <p className="text-stone-600 mt-4 leading-relaxed">
+          <p className="text-stone-600 dark:text-stone-300 mt-4 leading-relaxed">
             {product.description || 'Fresh produce directly from the farm. Quality guaranteed.'}
           </p>
 
           <div className="mt-5 space-y-2.5 text-sm">
-            <div className="flex items-center gap-2 text-stone-600">
+            <div className="flex items-center gap-2 text-stone-600 dark:text-stone-300">
               <span className="text-base">📦</span>
               <span>Available: <strong>{product.quantity} {product.unit}</strong></span>
             </div>
             {product.location && (
-              <div className="flex items-center gap-2 text-stone-600">
+              <div className="flex items-center gap-2 text-stone-600 dark:text-stone-300">
                 <span className="text-base">📍</span>
                 <span>Location: <strong>{product.location}</strong></span>
               </div>
             )}
             {product.farmer && (
-              <div className="flex items-center gap-2 text-stone-600">
+              <div className="flex items-center gap-2 text-stone-600 dark:text-stone-300">
                 <span className="text-base">👨‍🌾</span>
                 <span>Farmer: <strong>{product.farmer.name}</strong></span>
-                {product.farmer.location && <span className="text-stone-400">· {product.farmer.location}</span>}
+                {product.farmer.location && <span className="text-stone-400 dark:text-stone-500">· {product.farmer.location}</span>}
               </div>
             )}
-            <div className="flex items-center gap-2 text-stone-400">
+            <div className="flex items-center gap-2 text-stone-400 dark:text-stone-500">
               <span className="text-base">🗓️</span>
               <span>Listed: {new Date(product.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
             </div>

@@ -34,8 +34,8 @@ export default function Login() {
 
         <div className="text-center mb-8">
           <span className="text-5xl">🌱</span>
-          <h1 className="font-display text-3xl font-bold text-stone-800 mt-3">Welcome back</h1>
-          <p className="text-stone-500 mt-2">Sign in to your AgroConnect account</p>
+          <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100 mt-3">Welcome back</h1>
+          <p className="text-stone-500 dark:text-stone-400 mt-2">Sign in to your AgroConnect account</p>
         </div>
 
         <div className="card p-8">
@@ -79,17 +79,17 @@ export default function Login() {
           </form>
 
           {/* Quick demo accounts */}
-          <div className="mt-6 p-4 bg-earth-50 rounded-xl border border-earth-100">
-            <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-2">Demo Accounts</p>
-            <div className="space-y-1 text-xs text-stone-500">
+          <div className="mt-6 p-4 bg-earth-50 dark:bg-stone-900/50 rounded-xl border border-earth-100 dark:border-stone-700">
+            <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-2">Demo Accounts</p>
+            <div className="space-y-1 text-xs text-stone-500 dark:text-stone-400">
               <p>🌾 Farmer: farmer@demo.com / demo123</p>
               <p>🛒 Buyer: buyer@demo.com / demo123</p>
             </div>
           </div>
 
-          <p className="text-center text-stone-500 text-sm mt-6">
+          <p className="text-center text-stone-500 dark:text-stone-400 text-sm mt-6">
             Don't have an account?{' '}
-            <Link to="/register" className="text-forest-600 font-medium hover:underline">
+            <Link to="/register" className="text-forest-600 dark:text-forest-400 font-medium hover:underline">
               Create one free
             </Link>
           </p>
