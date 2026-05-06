@@ -12,19 +12,16 @@ import hashlib
 from app.core.config import settings
 
 # bcrypt password context
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
 
-
-# ──────────────────────────── Password helpers ────────────────────────────
-
-def hash_password(plain: str) -> str:
-    """Hash a plain-text password using bcrypt."""
-    plain = hashlib.sha256(plain.encode()).hexdigest()
-    return pwd_context.hash(plain)
-
+def hash_password(password: str) -> str:
+    password = hashlib.sha256(password.encode()).hexdigest()
+    return pwd_context.hash(password)
 
 def verify_password(plain: str, hashed: str) -> bool:
-    """Verify a plain-text password against its bcrypt hash."""
     plain = hashlib.sha256(plain.encode()).hexdigest()
     return pwd_context.verify(plain, hashed)
 
