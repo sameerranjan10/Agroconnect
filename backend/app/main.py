@@ -30,10 +30,6 @@ app = FastAPI(
 )
 
 # ── CORS ──────────────────────────────────────────────────────────────────
-origins = [
-    "https://agroconnect-chi.vercel.app",
-]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
