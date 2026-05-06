@@ -13,7 +13,7 @@ from app.models.user import UserRole
 class UserRegister(BaseModel):
     name:     str      = Field(..., min_length=2,  max_length=120)
     email:    EmailStr
-    password: str      = Field(..., min_length=6,  max_length=100)
+    password: str      = Field(..., min_length=6,  max_length=256, description="SHA-256 preprocessing allows long passwords up to 256 chars safely")
     role:     UserRole = UserRole.BUYER
     phone:    Optional[str] = None
     location: Optional[str] = None
@@ -21,7 +21,7 @@ class UserRegister(BaseModel):
 
 class UserLogin(BaseModel):
     email:    EmailStr
-    password: str
+    password: str      = Field(..., max_length=256)
 
 
 class UserUpdate(BaseModel):
