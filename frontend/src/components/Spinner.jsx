@@ -1,3 +1,5 @@
+import Logo from './Logo'
+
 export default function Spinner({ size = 'md', className = '' }) {
   const sizes = { sm: 'h-4 w-4', md: 'h-8 w-8', lg: 'h-12 w-12' }
   return (
@@ -10,7 +12,7 @@ export default function Spinner({ size = 'md', className = '' }) {
 export function PageLoader() {
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-      <span className="text-4xl animate-pulse-slow">🌱</span>
+      <Logo className="h-14 w-auto animate-pulse-slow" />
       <Spinner size="lg" />
       <p className="text-stone-400 text-sm">Loading…</p>
     </div>

@@ -31,6 +31,11 @@ class UserUpdate(BaseModel):
     bio:      Optional[str] = Field(None, max_length=500)
 
 
+class GoogleLoginRequest(BaseModel):
+    credential: str
+    role: Optional[UserRole] = UserRole.BUYER
+
+
 # ── Response schemas ─────────────────────────────────────────────────────
 
 class UserOut(BaseModel):

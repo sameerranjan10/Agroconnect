@@ -5,9 +5,11 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import Logo from '../components/Logo'
+import { GoogleLogin } from '@react-oauth/google'
 
 export default function Login() {
-  const { login } = useAuth()
+  const { login, loginWithGoogle } = useAuth()
   const navigate  = useNavigate()
   const [form,    setForm]    = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
@@ -29,36 +31,42 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 page-enter">
-      <div className="w-full max-w-md">
+    <div 
+      className="min-h-[90vh] flex items-center justify-center px-4 py-16 page-enter relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/login_bg.jpg')" }}
+    >
+      {/* Dark overlay for contrast */}
+      <div className="absolute inset-0 bg-stone-900/50 dark:bg-stone-950/75 backdrop-blur-[3px]" />
+
+      <div className="w-full max-w-md relative z-10">
 
         <div className="text-center mb-8">
-          <span className="text-5xl">🌱</span>
-          <h1 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100 mt-3">Welcome back</h1>
-          <p className="text-stone-500 dark:text-stone-400 mt-2">Sign in to your AgroConnect account</p>
+          <Logo className="h-20 w-auto mx-auto drop-shadow-md" />
+          <h1 className="font-display text-3xl font-bold text-white drop-shadow-md mt-3">Welcome back</h1>
+          <p className="text-stone-200 dark:text-stone-300 drop-shadow-sm mt-2">Sign in to your AgroConnect account</p>
         </div>
 
-        <div className="card p-8">
+        <div className="card p-8 bg-white/10 dark:bg-stone-950/30 backdrop-blur-xl shadow-2xl border border-white/15 dark:border-white/5">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="label">Email Address</label>
+              <label className="label text-white/95 dark:text-stone-200 font-semibold drop-shadow-sm">Email Address</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={set('email')}
-                className="input"
+                className="input bg-white/90 focus:bg-white dark:bg-stone-900/80 dark:focus:bg-stone-900"
                 placeholder="farmer@example.com"
                 required
               />
             </div>
 
             <div>
-              <label className="label">Password</label>
+              <label className="label text-white/95 dark:text-stone-200 font-semibold drop-shadow-sm">Password</label>
               <input
                 type="password"
                 value={form.password}
                 onChange={set('password')}
-                className="input"
+                className="input bg-white/90 focus:bg-white dark:bg-stone-900/80 dark:focus:bg-stone-900"
                 placeholder="••••••••"
                 required
               />
@@ -67,7 +75,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary py-3 text-base"
+              className="w-full btn-primary py-3 text-base shadow-lg"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -78,18 +86,40 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Quick demo accounts */}
-          <div className="mt-6 p-4 bg-earth-50 dark:bg-stone-900/50 rounded-xl border border-earth-100 dark:border-stone-700">
-            <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wide mb-2">Demo Accounts</p>
-            <div className="space-y-1 text-xs text-stone-500 dark:text-stone-400">
-              <p>🌾 Farmer: farmer@demo.com / demo123</p>
-              <p>🛒 Buyer: buyer@demo.com / demo123</p>
+          {/* Google Sign In */}
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/20 dark:border-white/10" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-stone-900/30 px-2.5 py-0.5 rounded text-white/60 dark:text-stone-400 font-semibold tracking-wider backdrop-blur-sm">Or continue with</span>
             </div>
           </div>
 
-          <p className="text-center text-stone-500 dark:text-stone-400 text-sm mt-6">
+          <div className="flex justify-center w-full">
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                try {
+                  const user = await loginWithGoogle(credentialResponse.credential, 'BUYER')
+                  toast.success(`Welcome back, ${user.name}! 🌱`)
+                  navigate(user.role === 'FARMER' ? '/dashboard' : '/marketplace')
+                } catch (err) {
+                  toast.error('Google login failed')
+                }
+              }}
+              onError={() => {
+                toast.error('Google authentication failed')
+              }}
+              theme="outline"
+              shape="pill"
+              size="large"
+              width="320px"
+            />
+          </div>
+
+          <p className="text-center text-white/80 dark:text-stone-300 text-sm mt-8 drop-shadow-sm">
             Don't have an account?{' '}
-            <Link to="/register" className="text-forest-600 dark:text-forest-400 font-medium hover:underline">
+            <Link to="/register" className="text-amber-300 hover:text-amber-200 dark:text-forest-400 dark:hover:text-forest-300 font-semibold hover:underline">
               Create one free
             </Link>
           </p>

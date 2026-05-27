@@ -3,6 +3,8 @@
  */
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Logo from '../components/Logo'
+
 
 const STATS = [
   { label: 'Farmers',   value: '12,000+', icon: '👨‍🌾' },
@@ -177,7 +179,10 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-earth-100 dark:border-stone-800 py-8 text-center text-stone-400 dark:text-stone-500 text-sm">
-        <span>🌱 AgroConnect © 2024 · Connecting India's farms to markets</span>
+        <span className="inline-flex items-center gap-1.5 justify-center">
+          <Logo className="h-5 w-auto" />
+          AgroConnect © 2024 · Connecting India's farms to markets
+        </span>
       </footer>
     </div>
   )

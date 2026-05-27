@@ -21,7 +21,15 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 43200  # 30 days
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:5174,http://localhost:3000"
+
+    # Google OAuth
+    GOOGLE_CLIENT_ID: str = ""
+    VITE_GOOGLE_CLIENT_ID: str = ""
+
+    @property
+    def google_client_id(self) -> str:
+        return self.GOOGLE_CLIENT_ID or self.VITE_GOOGLE_CLIENT_ID
 
     @property
     def origins_list(self) -> list[str]:

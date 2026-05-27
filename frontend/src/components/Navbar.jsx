@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import Logo from './Logo'
 
 export default function Navbar() {
   const { user, isAuth, logout } = useAuth()
@@ -30,8 +31,10 @@ export default function Navbar() {
     return (
       <Link
         to={to}
-        className={`text-sm font-medium transition-colors duration-150 ${
-          active ? 'text-forest-700 dark:text-forest-400' : 'text-stone-600 hover:text-forest-700 dark:text-stone-300 dark:hover:text-forest-400'
+        className={`block md:inline-block text-base md:text-sm font-medium transition-all duration-150 py-2.5 px-4 md:py-0 md:px-0 rounded-xl md:rounded-none ${
+          active
+            ? 'text-forest-700 dark:text-forest-400 bg-forest-50/50 dark:bg-forest-900/20 md:bg-transparent md:dark:bg-transparent font-semibold'
+            : 'text-stone-600 hover:text-forest-700 dark:text-stone-300 dark:hover:text-forest-400 hover:bg-earth-50 dark:hover:bg-stone-800 md:hover:bg-transparent md:dark:hover:bg-transparent'
         }`}
         onClick={() => setOpen(false)}
       >
@@ -47,7 +50,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <span className="text-2xl">🌱</span>
+            <Logo className="h-9 w-auto" />
             <span className="font-display font-bold text-xl text-stone-800 dark:text-stone-100 group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
               AgroConnect
             </span>

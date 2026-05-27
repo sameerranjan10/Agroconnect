@@ -104,7 +104,7 @@ export default function AITools() {
       </div>
 
       {/* Tool Switcher */}
-      <div className="flex gap-3 justify-center mb-10">
+      <div className="flex flex-col sm:flex-row gap-3 items-center justify-center mb-10">
         {[
           { key: 'crop',  icon: '🌱', label: 'Crop Advisor',       desc: 'What should I grow?' },
           { key: 'price', icon: '💰', label: 'Price Predictor',    desc: 'What price should I expect?' },
@@ -112,7 +112,7 @@ export default function AITools() {
           <button
             key={t.key}
             onClick={() => setActiveTool(t.key)}
-            className={`flex-1 max-w-xs rounded-2xl border-2 p-4 text-left transition-all ${
+            className={`w-full max-w-md sm:max-w-xs rounded-2xl border-2 p-4 text-left transition-all ${
               activeTool === t.key
                 ? 'border-forest-500 bg-forest-50 dark:bg-forest-900/30'
                 : 'border-earth-200 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-forest-300 dark:hover:border-forest-500'
@@ -271,7 +271,7 @@ export default function AITools() {
               </div>
               <div>
                 <label className="label">Quality Grade</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {QUALITIES.map(q => (
                     <button
                       key={q} type="button"

@@ -139,7 +139,7 @@ export default function FarmerDashboard() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-earth-100 dark:bg-stone-800 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 mb-6 bg-earth-100 dark:bg-stone-800 p-1 rounded-xl w-full max-w-full overflow-x-auto whitespace-nowrap sm:w-fit scrollbar-none">
         {[
           { key: 'products', label: '🌾 My Products' },
           { key: 'orders',   label: '📦 Orders' },
@@ -148,8 +148,8 @@ export default function FarmerDashboard() {
           <button
             key={t.key}
             onClick={() => { setTab(t.key); if (t.key !== 'add') { setEditId(null); setForm(EMPTY_FORM) } }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              tab === t.key ? 'bg-white dark:bg-stone-700 text-forest-700 dark:text-forest-400 shadow-sm' : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'
+            className={`flex-1 sm:flex-initial text-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              tab === t.key ? 'bg-white dark:bg-stone-700 text-forest-700 dark:text-forest-400 shadow-sm font-semibold' : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'
             }`}
           >
             {t.label}
@@ -236,12 +236,12 @@ export default function FarmerDashboard() {
             {editId ? 'Edit Product' : 'Add New Product'}
           </h2>
           <form onSubmit={handleSave} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="sm:col-span-2">
                 <label className="label">Product Title *</label>
                 <input value={form.title} onChange={set('title')} className="input" placeholder="Basmati Rice Grade A" required />
               </div>
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <label className="label">Description</label>
                 <textarea value={form.description} onChange={set('description')} className="input resize-none" rows={3} placeholder="Describe your product quality, harvest date, etc." />
               </div>

@@ -4,7 +4,7 @@ POST /ai/recommend-crop   → crop recommendation
 POST /ai/predict-price    → price prediction
 GET  /ai/health           → model health check
 """
-print("🔥 NEW AI.PY LOADED")
+print("[AI] NEW AI.PY LOADED")
 import sys
 from pathlib import Path
 from fastapi import APIRouter, HTTPException
@@ -25,28 +25,28 @@ for parent in BASE_DIR.parents:
     if possible.exists():
         ML_DIR = possible
         sys.path.append(str(ML_DIR))
-        print(f"✅ ML path set: {ML_DIR}")
+        print(f"[AI] ML path set: {ML_DIR}")
         break
 
 if ML_DIR is None:
-    print("❌ ML directory NOT found")
+    print("[AI] ML directory NOT found")
 
 # ─────────────────────────────────────────────
 # 🚀 DIRECT IMPORT (NO lazy loading, NO bugs)
 # ─────────────────────────────────────────────
 try:
     from inference.crop_inference import predict_crop
-    print("✅ Crop model ready")
+    print("[AI] Crop model ready")
 except Exception as e:
     predict_crop = None
-    print("❌ Crop import failed:", e)
+    print("[AI] Crop import failed:", e)
 
 try:
     from inference.price_inference import predict_price
-    print("✅ Price model ready")
+    print("[AI] Price model ready")
 except Exception as e:
     predict_price = None
-    print("❌ Price import failed:", e)
+    print("[AI] Price import failed:", e)
 
 # ─────────────────────────────────────────────
 router = APIRouter(prefix="/ai", tags=["AI / ML"])
