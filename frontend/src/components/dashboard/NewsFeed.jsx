@@ -31,20 +31,20 @@ export default function NewsFeed() {
   return (
     <div className="glass-card p-6 h-full flex flex-col">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="font-semibold text-stone-200">Agriculture News & Trends</h3>
+        <h3 className="font-semibold text-stone-700 dark:text-stone-200">Agriculture News & Trends</h3>
       </div>
       
       <motion.div variants={container} initial="hidden" animate="show" className="space-y-4 flex-1 overflow-y-auto dash-scroll pr-2">
         {NEWS_ITEMS.map((news) => (
-          <motion.div key={news.id} variants={item} className="p-4 rounded-xl bg-white/5 border border-dashboard-border hover:bg-white/10 transition-colors cursor-pointer group">
+          <motion.div key={news.id} variants={item} className="p-4 rounded-xl bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-dashboard-border hover:bg-stone-200 dark:bg-white/10 transition-colors cursor-pointer group">
             <div className="flex justify-between items-start mb-2">
               <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${getColorClasses(news.categoryColor)}`}>
                 {news.category}
               </span>
-              <span className="text-xs text-stone-500">{news.time}</span>
+              <span className="text-xs text-stone-400 dark:text-stone-500">{news.time}</span>
             </div>
-            <h4 className="font-medium text-stone-200 text-sm mb-1 group-hover:text-emerald-400 transition-colors">{news.title}</h4>
-            <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">{news.summary}</p>
+            <h4 className="font-medium text-stone-700 dark:text-stone-200 text-sm mb-1 group-hover:text-emerald-400 transition-colors">{news.title}</h4>
+            <p className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400 line-clamp-2 leading-relaxed">{news.summary}</p>
           </motion.div>
         ))}
       </motion.div>

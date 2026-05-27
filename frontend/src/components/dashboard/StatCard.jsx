@@ -29,8 +29,8 @@ export default function StatCard({ icon: Icon, label, value, trend, trendUp, col
         )}
       </div>
       <div>
-        <h3 className="text-stone-400 font-medium text-sm mb-1">{label}</h3>
-        <div className="text-3xl font-display font-bold text-stone-100 tracking-tight">
+        <h3 className="text-stone-400 dark:text-stone-500 dark:text-stone-400 font-medium text-sm mb-1">{label}</h3>
+        <div className="text-3xl font-display font-bold text-stone-800 dark:text-stone-100 tracking-tight">
           {typeof value === 'number' ? (
             <AnimatedCounter value={value} prefix={label.toLowerCase().includes('revenue') ? '₹' : ''} />
           ) : (

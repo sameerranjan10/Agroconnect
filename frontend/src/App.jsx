@@ -26,7 +26,7 @@ function AppLayout() {
   const isDashboardRoute = location.pathname.includes('/farmer/dashboard') || location.pathname.includes('/buyer/dashboard');
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDashboardRoute ? 'bg-dashboard-bg' : ''}`}>
+    <div className={`min-h-screen flex flex-col ${isDashboardRoute ? 'bg-stone-50 dark:bg-dashboard-bg transition-colors duration-300' : ''}`}>
       {!isDashboardRoute && <Navbar />}
 
       <main className="flex-1">

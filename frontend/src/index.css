@@ -14,18 +14,20 @@
     @apply bg-earth-50 text-stone-800 antialiased dark:bg-stone-900 dark:text-stone-100;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  html:not(.dark) body {
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45,155,90,0.08), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,131,42,0.06), transparent);
+    --chart-grid: #e5e7eb;
+    --chart-tooltip-bg: #ffffff;
+    --chart-tooltip-border: #e5e7eb;
+    --chart-tooltip-text: #1f2937;
   }
 
   html.dark body {
     background-image:
       radial-gradient(ellipse 80% 50% at 50% -20%, rgba(45,155,90,0.15), transparent),
       radial-gradient(ellipse 60% 40% at 80% 100%, rgba(200,131,42,0.1), transparent);
+    --chart-grid: #1e2e25;
+    --chart-tooltip-bg: #162019;
+    --chart-tooltip-border: #1e2e25;
+    --chart-tooltip-text: #f5f5f4;
   }
 
   h1, h2, h3 {
@@ -72,7 +74,7 @@
 
   /* Dashboard-specific */
   .glass-card {
-    @apply bg-dashboard-card/80 backdrop-blur-xl border border-dashboard-border rounded-2xl;
+    @apply bg-white/90 dark:bg-dashboard-card/80 backdrop-blur-xl border border-stone-200 dark:border-dashboard-border rounded-2xl shadow-sm dark:shadow-none transition-colors duration-300;
   }
   .glass-card-hover {
     @apply glass-card hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300;
@@ -85,24 +87,42 @@
     @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
   }
   .sidebar-item-inactive {
-    @apply text-stone-400 hover:text-emerald-300 hover:bg-white/5;
+    @apply text-stone-600 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-300 hover:bg-stone-100 dark:hover:bg-white/5;
   }
   .glow-border {
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.08),
                 inset 0 0 15px rgba(16, 185, 129, 0.03);
   }
   .dash-input {
-    @apply w-full bg-white/5 border border-dashboard-border rounded-xl px-4 py-2.5
-           text-stone-200 placeholder-stone-500 focus:outline-none focus:ring-2
+    @apply w-full bg-white dark:bg-white/5 border border-stone-200 dark:border-dashboard-border rounded-xl px-4 py-2.5
+           text-stone-900 dark:text-stone-200 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:ring-2
            focus:ring-emerald-500/40 focus:border-emerald-500/30
            transition-all duration-150;
   }
   .dash-label {
-    @apply block text-sm font-medium text-stone-400 mb-1.5;
+    @apply block text-sm font-medium text-stone-600 dark:text-stone-400 mb-1.5;
   }
   .skeleton {
-    @apply bg-gradient-to-r from-dashboard-card via-dashboard-hover to-dashboard-card
+    @apply bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 
+           dark:from-dashboard-card dark:via-dashboard-hover dark:to-dashboard-card
            bg-[length:200%_100%] animate-shimmer rounded-xl;
+  }
+}
+
+@layer utilities {
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+  .animate-breathe {
+    animation: breathe 6s ease-in-out infinite;
   }
 }
 

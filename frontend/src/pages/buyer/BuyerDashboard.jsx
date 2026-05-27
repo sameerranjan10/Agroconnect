@@ -109,14 +109,14 @@ export default function BuyerDashboard() {
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-8">
               <div>
-                <h2 className="font-display text-2xl font-bold text-stone-100">
+                <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">
                   {activeSection === 'recommend' ? 'Recommended for You' : 'Marketplace'}
                 </h2>
-                <p className="text-stone-400 text-sm">Source directly from farmers</p>
+                <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Source directly from farmers</p>
               </div>
               {activeSection === 'marketplace' && (
                 <div className="w-full md:w-auto relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 dark:text-stone-500 dark:text-stone-400" />
                   <input value={search} onChange={e => setSearch(e.target.value)} type="text" placeholder="Search crops..." className="dash-input pl-10 w-full md:w-64" />
                 </div>
               )}
@@ -125,7 +125,7 @@ export default function BuyerDashboard() {
             {activeSection === 'marketplace' && (
               <div className="flex gap-2 overflow-x-auto pb-2 dash-scroll mb-6">
                 {CATEGORIES.map(c => (
-                  <button key={c} onClick={() => setCategory(c)} className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border ${category === c ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-white/5 text-stone-400 border-dashboard-border hover:bg-white/10 hover:text-stone-300'}`}>
+                  <button key={c} onClick={() => setCategory(c)} className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border ${category === c ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-stone-100 dark:bg-white/5 text-stone-400 dark:text-stone-500 dark:text-stone-400 border-stone-200 dark:border-dashboard-border hover:bg-stone-200 dark:bg-white/10 hover:text-stone-600 dark:text-stone-300'}`}>
                     {c}
                   </button>
                 ))}
@@ -141,23 +141,23 @@ export default function BuyerDashboard() {
                     {activeSection === 'recommend' && (
                       <div className="absolute top-3 left-3 z-10 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 shadow-lg"><Sparkles className="w-3 h-3" /> AI Match</div>
                     )}
-                    <button onClick={() => toggleSave(p.id)} className="absolute top-3 right-3 z-10 p-2 bg-dashboard-card/50 backdrop-blur-md rounded-full hover:bg-dashboard-card transition-colors">
-                      <Heart className={`w-4 h-4 transition-colors ${savedProducts.includes(p.id) ? 'fill-rose-500 text-rose-500' : 'text-stone-300'}`} />
+                    <button onClick={() => toggleSave(p.id)} className="absolute top-3 right-3 z-10 p-2 bg-white/50 TEMP_PLACEHOLDER_bg-white dark:bg-dashboard-card/50 backdrop-blur-md rounded-full hover:bg-white dark:bg-dashboard-card transition-colors">
+                      <Heart className={`w-4 h-4 transition-colors ${savedProducts.includes(p.id) ? 'fill-rose-500 text-rose-500' : 'text-stone-600 dark:text-stone-300'}`} />
                     </button>
-                    <div className="h-40 bg-gradient-to-br from-emerald-900/30 to-forest-900/30 flex items-center justify-center border-b border-dashboard-border">
+                    <div className="h-40 bg-gradient-to-br from-emerald-900/30 to-forest-900/30 flex items-center justify-center border-b border-stone-200 dark:border-dashboard-border">
                       <Store className="w-12 h-12 text-emerald-500/50" />
                     </div>
                     <div className="p-4 flex flex-col flex-1">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-stone-100 line-clamp-1">{p.title}</h3>
+                        <h3 className="font-semibold text-stone-800 dark:text-stone-100 line-clamp-1">{p.title}</h3>
                         <div className="font-display font-bold text-lg text-emerald-400">₹{p.price}</div>
                       </div>
                       <div className="flex items-center gap-1 mb-2">
                         <span className="text-amber-400 text-sm">★</span>
-                        <span className="text-stone-300 text-xs font-medium">{getRating(p.id)}</span>
-                        <span className="text-stone-500 text-[10px] ml-1">(Verified)</span>
+                        <span className="text-stone-600 dark:text-stone-300 text-xs font-medium">{getRating(p.id)}</span>
+                        <span className="text-stone-400 dark:text-stone-500 text-[10px] ml-1">(Verified)</span>
                       </div>
-                      <div className="text-xs text-stone-400 mb-4 space-y-1">
+                      <div className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400 mb-4 space-y-1">
                         <p className="flex items-center gap-1"><Users className="w-3 h-3" /> {p.farmer?.name}</p>
                         <p className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {p.farmer?.location || 'India'}</p>
                         <p className="flex items-center gap-1"><Package className="w-3 h-3" /> {p.quantity} {p.unit} available</p>
@@ -178,8 +178,8 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Saved Products</h2>
-              <p className="text-stone-400 text-sm">Your shortlisted items</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Saved Products</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Your shortlisted items</p>
             </div>
             
             {saved.length === 0 ? (
@@ -188,15 +188,15 @@ export default function BuyerDashboard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {saved.map(p => (
                   <div key={p.id} className="glass-card p-4 flex gap-4 items-center relative group">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-900/30 to-forest-900/30 flex items-center justify-center shrink-0 border border-dashboard-border">
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-900/30 to-forest-900/30 flex items-center justify-center shrink-0 border border-stone-200 dark:border-dashboard-border">
                       <Store className="w-6 h-6 text-emerald-500/50" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-stone-100 truncate">{p.title}</h3>
+                      <h3 className="font-medium text-stone-800 dark:text-stone-100 truncate">{p.title}</h3>
                       <p className="font-display font-bold text-emerald-400">₹{p.price}</p>
                       <button onClick={() => toggleSave(p.id)} className="text-[10px] text-rose-400 uppercase font-bold tracking-wider hover:text-rose-300 mt-1">Remove</button>
                     </div>
-                    <button onClick={() => setOrderItem(p)} className="p-2 rounded-lg bg-white/5 border border-dashboard-border text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-colors shrink-0">
+                    <button onClick={() => setOrderItem(p)} className="p-2 rounded-lg bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-dashboard-border text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/30 transition-colors shrink-0">
                       <Package className="w-5 h-5" />
                     </button>
                   </div>
@@ -210,8 +210,8 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">My Orders</h2>
-              <p className="text-stone-400 text-sm">Track your purchases</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">My Orders</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Track your purchases</p>
             </div>
             
             {orders.length === 0 ? (
@@ -223,16 +223,16 @@ export default function BuyerDashboard() {
                     <div className={`absolute left-0 top-0 bottom-0 w-1 ${STATUS_COLORS[o.status].split(' ')[0]}`} />
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
-                        <h3 className="font-bold text-stone-200 text-lg">Order #{o.id}</h3>
+                        <h3 className="font-bold text-stone-700 dark:text-stone-200 text-lg">Order #{o.id}</h3>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${STATUS_COLORS[o.status]}`}>{o.status}</span>
                       </div>
                       <p className="font-medium text-emerald-400 mb-1">{o.product?.title}</p>
-                      <p className="text-sm text-stone-400">Qty: {o.quantity} {o.product?.unit} • Farmer: {o.product?.farmer?.name}</p>
-                      <p className="text-[10px] text-stone-500 mt-2 uppercase tracking-wider">{new Date(o.created_at).toLocaleDateString()}</p>
+                      <p className="text-sm text-stone-400 dark:text-stone-500 dark:text-stone-400">Qty: {o.quantity} {o.product?.unit} • Farmer: {o.product?.farmer?.name}</p>
+                      <p className="text-[10px] text-stone-400 dark:text-stone-500 mt-2 uppercase tracking-wider">{new Date(o.created_at).toLocaleDateString()}</p>
                     </div>
-                    <div className="text-left md:text-right border-t md:border-t-0 md:border-l border-dashboard-border pt-4 md:pt-0 md:pl-5">
-                      <p className="text-xs text-stone-400 mb-1">Total Paid</p>
-                      <div className="text-2xl font-display font-bold text-stone-100">₹{o.total_price}</div>
+                    <div className="text-left md:text-right border-t md:border-t-0 md:border-l border-stone-200 dark:border-dashboard-border pt-4 md:pt-0 md:pl-5">
+                      <p className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400 mb-1">Total Paid</p>
+                      <div className="text-2xl font-display font-bold text-stone-800 dark:text-stone-100">₹{o.total_price}</div>
                     </div>
                   </div>
                 ))}
@@ -255,8 +255,8 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">My Suppliers</h2>
-              <p className="text-stone-400 text-sm">Farmers you can source from</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">My Suppliers</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Farmers you can source from</p>
             </div>
             
             {farmers.length === 0 ? (
@@ -268,10 +268,10 @@ export default function BuyerDashboard() {
                     <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center font-bold text-xl mb-4">
                       {f.name ? f.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'F'}
                     </div>
-                    <h3 className="font-semibold text-stone-100">{f.name}</h3>
-                    <p className="text-xs text-stone-400 flex items-center justify-center gap-1 mt-1"><MapPin className="w-3 h-3" /> {f.location || 'India'}</p>
-                    <div className="mt-4 pt-4 border-t border-dashboard-border w-full flex justify-between items-center">
-                      <span className="text-sm font-medium text-stone-300">{f.count} products</span>
+                    <h3 className="font-semibold text-stone-800 dark:text-stone-100">{f.name}</h3>
+                    <p className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400 flex items-center justify-center gap-1 mt-1"><MapPin className="w-3 h-3" /> {f.location || 'India'}</p>
+                    <div className="mt-4 pt-4 border-t border-stone-200 dark:border-dashboard-border w-full flex justify-between items-center">
+                      <span className="text-sm font-medium text-stone-600 dark:text-stone-300">{f.count} products</span>
                       <button onClick={() => { setSearch(f.name); setActiveSection('marketplace') }} className="text-xs font-bold text-emerald-400 hover:text-emerald-300">View All</button>
                     </div>
                   </div>
@@ -285,8 +285,8 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Price Trends</h2>
-              <p className="text-stone-400 text-sm">Make informed buying decisions</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Price Trends</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Make informed buying decisions</p>
             </div>
             <PriceTrendChart />
           </div>
@@ -296,10 +296,10 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Nearby Farmers</h2>
-              <p className="text-stone-400 text-sm">Source locally to reduce logistics costs</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Nearby Farmers</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Source locally to reduce logistics costs</p>
             </div>
-            <div className="glass-card h-64 bg-dashboard-surface/50 border-dashed border-2 border-dashboard-border rounded-3xl flex items-center justify-center flex-col text-stone-500 mb-6">
+            <div className="glass-card h-64 bg-stone-100/50 TEMP_PLACEHOLDER_bg-stone-100 dark:bg-dashboard-surface/50 border-dashed border-2 border-stone-200 dark:border-dashboard-border rounded-3xl flex items-center justify-center flex-col text-stone-400 dark:text-stone-500 mb-6">
               <MapPin className="w-12 h-12 mb-2 opacity-50" />
               <p>Map visualization coming soon</p>
             </div>
@@ -311,8 +311,8 @@ export default function BuyerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Analytics</h2>
-              <p className="text-stone-400 text-sm">Your purchasing metrics</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Analytics</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Your purchasing metrics</p>
             </div>
             <div className="grid lg:grid-cols-2 gap-6">
               <RevenueChart title="Spending Overview" />
@@ -325,8 +325,8 @@ export default function BuyerDashboard() {
         return (
           <div className="max-w-2xl mx-auto space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Settings</h2>
-              <p className="text-stone-400 text-sm">Manage your profile</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Settings</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Manage your profile</p>
             </div>
             <form onSubmit={handleSettingsSubmit} className="glass-card p-6 space-y-5">
               <div>

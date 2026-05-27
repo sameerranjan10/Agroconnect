@@ -22,23 +22,23 @@ export default function DashboardSidebar({ items, activeItem, onItemClick, colla
 
       {/* Sidebar */}
       <motion.aside
-        className="fixed top-0 left-0 bottom-0 bg-gradient-to-b from-dashboard-surface to-dashboard-bg border-r border-dashboard-border z-50 flex flex-col"
+        className="fixed top-0 left-0 bottom-0 bg-white dark:bg-gradient-to-b dark:from-dashboard-surface dark:to-dashboard-bg border-r border-stone-200 dark:border-dashboard-border z-50 flex flex-col transition-colors duration-300"
         animate={{ width: collapsed ? 72 : 280, x: typeof window !== 'undefined' && window.innerWidth < 768 ? (collapsed ? -280 : 0) : 0 }}
         transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
       >
         {/* Header */}
-        <div className="h-16 flex items-center px-4 shrink-0 justify-between relative z-10 border-b border-dashboard-border/50">
+        <div className="h-16 flex items-center px-4 shrink-0 justify-between relative z-10 border-b border-stone-200 dark:border-dashboard-border/50 transition-colors duration-300">
           <div className="flex items-center gap-3 overflow-hidden whitespace-nowrap">
             <Logo className="h-8 w-auto shrink-0 text-emerald-500" />
             <AnimatePresence mode="popLayout">
               {!collapsed && (
-                <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="font-display font-bold text-xl text-stone-100">
+                <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="font-display font-bold text-xl text-stone-800 dark:text-stone-100">
                   AgroConnect
                 </motion.span>
               )}
             </AnimatePresence>
           </div>
-          <button onClick={() => onToggleCollapse()} className="md:hidden p-2 text-stone-400 hover:text-white rounded-lg">
+          <button onClick={() => onToggleCollapse()} className="md:hidden p-2 text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-white rounded-lg">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -51,7 +51,7 @@ export default function DashboardSidebar({ items, activeItem, onItemClick, colla
               <button
                 key={item.id}
                 onClick={() => { onItemClick(item.id); if(window.innerWidth < 768) onToggleCollapse(); }}
-                className={`w-full relative group flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-emerald-500/10 text-emerald-400 glow-border' : 'text-stone-400 hover:text-emerald-300 hover:bg-white/5'}`}
+                className={`w-full relative group flex items-center p-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-emerald-500/10 text-emerald-400 glow-border' : 'text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-emerald-300 hover:bg-stone-100 dark:bg-white/5'}`}
                 title={collapsed ? item.label : ''}
               >
                 {isActive && (
@@ -78,7 +78,7 @@ export default function DashboardSidebar({ items, activeItem, onItemClick, colla
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-dashboard-border/50 bg-dashboard-bg/50 shrink-0 relative z-10">
+        <div className="p-4 border-t border-stone-200 dark:border-dashboard-border/50 bg-stone-50 dark:bg-dashboard-bg/50 shrink-0 relative z-10 transition-colors duration-300">
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="w-10 h-10 rounded-xl bg-emerald-900/50 border border-emerald-500/30 text-emerald-400 flex items-center justify-center font-bold shrink-0">
               {getInitials(user?.name)}
@@ -86,7 +86,7 @@ export default function DashboardSidebar({ items, activeItem, onItemClick, colla
             <AnimatePresence mode="popLayout">
               {!collapsed && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="whitespace-nowrap">
-                  <p className="text-sm font-medium text-stone-200 truncate w-32">{user?.name || 'User'}</p>
+                  <p className="text-sm font-medium text-stone-700 dark:text-stone-200 truncate w-32">{user?.name || 'User'}</p>
                   <p className="text-[10px] text-emerald-500/80 font-bold tracking-wider uppercase">{user?.role}</p>
                 </motion.div>
               )}

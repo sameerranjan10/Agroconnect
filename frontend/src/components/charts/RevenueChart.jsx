@@ -13,8 +13,8 @@ export function RevenueChart({ data = MOCK_REVENUE, title = 'Revenue Overview' }
   return (
     <div className="glass-card p-6 h-full flex flex-col min-h-[350px]">
       <div className="mb-6">
-        <h3 className="font-semibold text-stone-200">{title}</h3>
-        <p className="text-xs text-stone-500 mt-1">Monthly performance</p>
+        <h3 className="font-semibold text-stone-700 dark:text-stone-200">{title}</h3>
+        <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">Monthly performance</p>
       </div>
       
       <div className="flex-1 w-full min-h-[250px]">
@@ -26,11 +26,11 @@ export function RevenueChart({ data = MOCK_REVENUE, title = 'Revenue Overview' }
                 <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2e25" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" vertical={false} />
             <XAxis dataKey="month" stroke="#78716c" tick={{ fill: '#78716c', fontSize: 12 }} axisLine={false} tickLine={false} />
             <YAxis stroke="#78716c" tick={{ fill: '#78716c', fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(value) => `₹${value/1000}k`} />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#162019', borderColor: '#1e2e25', borderRadius: '12px', color: '#f5f5f4' }}
+              contentStyle={{ backgroundColor: 'var(--chart-tooltip-bg)', borderColor: 'var(--chart-tooltip-border)', borderRadius: '12px', color: 'var(--chart-tooltip-text)' }}
               itemStyle={{ color: '#10b981' }}
               formatter={(value) => [`₹${value.toLocaleString()}`, 'Revenue']}
             />
@@ -53,7 +53,7 @@ export function OrderStatusChart({ data = MOCK_ORDER_STATUS }) {
   return (
     <div className="glass-card p-6 h-full flex flex-col min-h-[350px]">
       <div className="mb-6">
-        <h3 className="font-semibold text-stone-200">Orders by Status</h3>
+        <h3 className="font-semibold text-stone-700 dark:text-stone-200">Orders by Status</h3>
       </div>
       
       <div className="flex-1 w-full min-h-[250px] relative flex flex-col items-center justify-center">
@@ -74,8 +74,8 @@ export function OrderStatusChart({ data = MOCK_ORDER_STATUS }) {
               ))}
             </Pie>
             <Tooltip 
-              contentStyle={{ backgroundColor: '#162019', borderColor: '#1e2e25', borderRadius: '12px', color: '#f5f5f4' }}
-              itemStyle={{ color: '#f5f5f4' }}
+              contentStyle={{ backgroundColor: 'var(--chart-tooltip-bg)', borderColor: 'var(--chart-tooltip-border)', borderRadius: '12px', color: 'var(--chart-tooltip-text)' }}
+              itemStyle={{ color: 'var(--chart-tooltip-text)' }}
               formatter={(value) => [`${value}%`, 'Orders']}
             />
           </PieChart>
@@ -86,7 +86,7 @@ export function OrderStatusChart({ data = MOCK_ORDER_STATUS }) {
           {data.map((entry, index) => (
             <div key={index} className="flex items-center gap-2 text-xs">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></span>
-              <span className="text-stone-400">{entry.name}</span>
+              <span className="text-stone-400 dark:text-stone-500 dark:text-stone-400">{entry.name}</span>
             </div>
           ))}
         </div>
@@ -108,18 +108,18 @@ export function PriceTrendChart({ data = MOCK_PRICES }) {
   return (
     <div className="glass-card p-6 h-full flex flex-col min-h-[400px]">
       <div className="mb-6">
-        <h3 className="font-semibold text-stone-200">Market Price Trends</h3>
-        <p className="text-xs text-stone-500 mt-1">Average wholesale prices (₹/kg)</p>
+        <h3 className="font-semibold text-stone-700 dark:text-stone-200">Market Price Trends</h3>
+        <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">Average wholesale prices (₹/kg)</p>
       </div>
       
       <div className="flex-1 w-full min-h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e2e25" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" vertical={false} />
             <XAxis dataKey="month" stroke="#78716c" tick={{ fill: '#78716c', fontSize: 12 }} axisLine={false} tickLine={false} />
             <YAxis stroke="#78716c" tick={{ fill: '#78716c', fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(val) => `₹${val}`} />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#162019', borderColor: '#1e2e25', borderRadius: '12px', color: '#f5f5f4' }}
+              contentStyle={{ backgroundColor: 'var(--chart-tooltip-bg)', borderColor: 'var(--chart-tooltip-border)', borderRadius: '12px', color: 'var(--chart-tooltip-text)' }}
             />
             <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '12px' }} />
             <Line type="monotone" dataKey="rice" name="Rice" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 0 }} activeDot={{ r: 6 }} />

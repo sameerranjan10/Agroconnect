@@ -45,17 +45,17 @@ export default function Register() {
       style={{ backgroundImage: "url('/register_bg.jpg')" }}
     >
       {/* Dark overlay for contrast */}
-      <div className="absolute inset-0 bg-stone-900/50 dark:bg-stone-950/75 backdrop-blur-[3px]" />
+      <div className="absolute inset-0 bg-stone-900/60 dark:bg-stone-950/80 backdrop-blur-sm" />
 
       <div className="w-full max-w-lg relative z-10">
 
         <div className="text-center mb-8">
           <Logo className="h-20 w-auto mx-auto drop-shadow-md" />
           <h1 className="font-display text-3xl font-bold text-white drop-shadow-md mt-3">Create your account</h1>
-          <p className="text-stone-200 dark:text-stone-300 drop-shadow-sm mt-2">Join the smart agriculture revolution</p>
+          <p className="text-stone-200 drop-shadow-sm mt-2">Join the smart agriculture revolution</p>
         </div>
 
-        <div className="card p-8 bg-white/10 dark:bg-stone-950/30 backdrop-blur-xl shadow-2xl border border-white/15 dark:border-white/5">
+        <div className="rounded-2xl p-6 sm:p-8 bg-white/10 dark:bg-stone-950/40 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-white/10">
           {/* Role toggle */}
           <div className="mb-6">
             <label className="label text-white/95 dark:text-stone-200 font-semibold drop-shadow-sm">I am a…</label>
@@ -68,9 +68,9 @@ export default function Register() {
                   className={`py-3 rounded-xl border-2 font-medium text-sm transition-all ${
                     form.role === role
                       ? role === 'FARMER'
-                        ? 'border-forest-500 bg-forest-50 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 font-semibold'
-                        : 'border-sky-500 bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 font-semibold'
-                      : 'border-white/15 dark:border-white/5 bg-white/5 dark:bg-black/15 text-white/90 dark:text-stone-300 hover:bg-white/10 dark:hover:bg-black/25'
+                        ? 'border-emerald-500 bg-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/30'
+                        : 'border-sky-500 bg-sky-500 text-white font-semibold shadow-lg shadow-sky-500/30'
+                      : 'border-white/20 bg-white/5 text-stone-300 hover:bg-white/10 hover:text-white'
                   }`}
                 >
                   {role === 'FARMER' ? '👨‍🌾 Farmer' : '🛒 Buyer'}
@@ -155,13 +155,10 @@ export default function Register() {
           </form>
 
           {/* Google Sign In */}
-          <div className="relative my-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/20 dark:border-white/10" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-stone-900/30 px-2.5 py-0.5 rounded text-white/60 dark:text-stone-400 font-semibold tracking-wider backdrop-blur-sm">Or continue with</span>
-            </div>
+          <div className="flex items-center my-6">
+            <div className="flex-grow border-t border-white/20 dark:border-white/10" />
+            <span className="px-4 text-xs uppercase text-stone-300 font-semibold tracking-wider">Or continue with</span>
+            <div className="flex-grow border-t border-white/20 dark:border-white/10" />
           </div>
 
           <div className="flex justify-center w-full">
@@ -181,13 +178,12 @@ export default function Register() {
               theme="outline"
               shape="pill"
               size="large"
-              width="320px"
             />
           </div>
 
-          <p className="text-center text-white/80 dark:text-stone-300 text-sm mt-8 drop-shadow-sm">
+          <p className="text-center text-stone-200 text-sm mt-8 drop-shadow-sm">
             Already have an account?{' '}
-            <Link to="/login" className="text-amber-300 hover:text-amber-200 dark:text-forest-400 dark:hover:text-forest-300 font-semibold hover:underline">
+            <Link to="/login" className="text-emerald-400 hover:text-emerald-300 font-semibold hover:underline transition-colors">
               Sign in
             </Link>
           </p>

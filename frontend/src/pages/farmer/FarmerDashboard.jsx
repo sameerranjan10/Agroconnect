@@ -7,6 +7,7 @@ import DashboardLayout from '../../layouts/DashboardLayout'
 import StatCard from '../../components/dashboard/StatCard'
 import WelcomeHero from '../../components/dashboard/WelcomeHero'
 import WeatherWidget from '../../components/dashboard/WeatherWidget'
+import SmartWeatherDashboard from '../../components/dashboard/SmartWeatherDashboard'
 import NewsFeed from '../../components/dashboard/NewsFeed'
 import SmartInsights from '../../components/dashboard/SmartInsights'
 import { DashboardSkeleton } from '../../components/dashboard/LoadingSkeleton'
@@ -180,24 +181,24 @@ export default function FarmerDashboard() {
             <div className="grid lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 glass-card p-6 h-full">
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="font-semibold text-stone-200">Recent Orders</h3>
+                  <h3 className="font-semibold text-stone-700 dark:text-stone-200">Recent Orders</h3>
                   <button onClick={() => setActiveSection('orders')} className="text-sm text-emerald-400 hover:text-emerald-300">View All</button>
                 </div>
                 {orders.length === 0 ? (
-                  <div className="text-center py-8 text-stone-500">No recent orders.</div>
+                  <div className="text-center py-8 text-stone-400 dark:text-stone-500">No recent orders.</div>
                 ) : (
                   <div className="space-y-4">
                     {orders.slice(0, 5).map(o => (
-                      <div key={o.id} className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-dashboard-border">
+                      <div key={o.id} className="flex justify-between items-center p-3 rounded-xl bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-dashboard-border">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-dashboard-surface flex items-center justify-center text-lg shrink-0">📦</div>
+                          <div className="w-10 h-10 rounded-lg bg-stone-100 dark:bg-dashboard-surface flex items-center justify-center text-lg shrink-0">📦</div>
                           <div>
-                            <p className="font-medium text-stone-200 text-sm">{o.product?.title}</p>
-                            <p className="text-xs text-stone-500">Order #{o.id}</p>
+                            <p className="font-medium text-stone-700 dark:text-stone-200 text-sm">{o.product?.title}</p>
+                            <p className="text-xs text-stone-400 dark:text-stone-500">Order #{o.id}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-stone-200 text-sm">₹{o.total_price}</p>
+                          <p className="font-bold text-stone-700 dark:text-stone-200 text-sm">₹{o.total_price}</p>
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${STATUS_COLORS[o.status]}`}>{o.status}</span>
                         </div>
                       </div>
@@ -215,8 +216,8 @@ export default function FarmerDashboard() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="font-display text-2xl font-bold text-stone-100">My Crops</h2>
-                <p className="text-stone-400 text-sm">Manage your product listings</p>
+                <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">My Crops</h2>
+                <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Manage your product listings</p>
               </div>
               <button onClick={() => { setEditId(null); setProductForm({ title: '', description: '', price: '', quantity: '', unit: 'kg', category: 'Grain', location: user?.location || '', image_url: '' }); setActiveSection('sell') }} className="btn-primary flex items-center gap-2">
                 <Sprout className="w-4 h-4" /> Add Product
@@ -231,20 +232,20 @@ export default function FarmerDashboard() {
                   <div key={p.id} className="glass-card-hover p-5 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="font-semibold text-lg text-stone-100">{p.title}</h3>
-                        <span className="text-xs bg-white/10 text-stone-300 px-2 py-1 rounded-md">{p.category}</span>
+                        <h3 className="font-semibold text-lg text-stone-800 dark:text-stone-100">{p.title}</h3>
+                        <span className="text-xs bg-stone-200 dark:bg-white/10 text-stone-600 dark:text-stone-300 px-2 py-1 rounded-md">{p.category}</span>
                       </div>
                       <div className="text-right">
                         <div className="font-display font-bold text-xl text-emerald-400">₹{p.price}</div>
-                        <div className="text-xs text-stone-400">per {p.unit}</div>
+                        <div className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400">per {p.unit}</div>
                       </div>
                     </div>
-                    <div className="text-sm text-stone-400 mb-4 flex-1 line-clamp-2">{p.description}</div>
-                    <div className="flex justify-between items-center pt-4 border-t border-dashboard-border">
-                      <div className="text-sm font-medium text-stone-300">Stock: {p.quantity} {p.unit}</div>
+                    <div className="text-sm text-stone-400 dark:text-stone-500 dark:text-stone-400 mb-4 flex-1 line-clamp-2">{p.description}</div>
+                    <div className="flex justify-between items-center pt-4 border-t border-stone-200 dark:border-dashboard-border">
+                      <div className="text-sm font-medium text-stone-600 dark:text-stone-300">Stock: {p.quantity} {p.unit}</div>
                       <div className="flex gap-2">
-                        <button onClick={() => { setEditId(p.id); setProductForm(p); setActiveSection('sell') }} className="p-2 text-stone-400 hover:text-sky-400 bg-white/5 rounded-lg transition-colors"><Edit3 className="w-4 h-4" /></button>
-                        <button onClick={() => handleDeleteProduct(p.id)} className="p-2 text-stone-400 hover:text-red-400 bg-white/5 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
+                        <button onClick={() => { setEditId(p.id); setProductForm(p); setActiveSection('sell') }} className="p-2 text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-sky-400 bg-stone-100 dark:bg-white/5 rounded-lg transition-colors"><Edit3 className="w-4 h-4" /></button>
+                        <button onClick={() => handleDeleteProduct(p.id)} className="p-2 text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-red-400 bg-stone-100 dark:bg-white/5 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     </div>
                   </div>
@@ -258,8 +259,8 @@ export default function FarmerDashboard() {
         return (
           <div className="max-w-3xl mx-auto space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">{editId ? 'Edit Product' : 'Add New Product'}</h2>
-              <p className="text-stone-400 text-sm">List your produce on the marketplace</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">{editId ? 'Edit Product' : 'Add New Product'}</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">List your produce on the marketplace</p>
             </div>
             
             <form onSubmit={handleProductSubmit} className="glass-card p-6 space-y-5">
@@ -279,7 +280,7 @@ export default function FarmerDashboard() {
                 <div>
                   <label className="dash-label">Unit</label>
                   <select className="dash-input" value={productForm.unit} onChange={e => setProductForm(f => ({...f, unit: e.target.value}))}>
-                    {UNITS.map(u => <option key={u} value={u} className="bg-dashboard-card text-stone-200">{u}</option>)}
+                    {UNITS.map(u => <option key={u} value={u} className="bg-white dark:bg-dashboard-card text-stone-700 dark:text-stone-200">{u}</option>)}
                   </select>
                 </div>
               </div>
@@ -291,13 +292,13 @@ export default function FarmerDashboard() {
                 <div>
                   <label className="dash-label">Category</label>
                   <select className="dash-input" value={productForm.category} onChange={e => setProductForm(f => ({...f, category: e.target.value}))}>
-                    {CATEGORIES.map(c => <option key={c} value={c} className="bg-dashboard-card text-stone-200">{c}</option>)}
+                    {CATEGORIES.map(c => <option key={c} value={c} className="bg-white dark:bg-dashboard-card text-stone-700 dark:text-stone-200">{c}</option>)}
                   </select>
                 </div>
               </div>
               <div className="flex gap-4 pt-4">
                 <button type="submit" disabled={saving} className="btn-primary flex-1">{saving ? 'Saving...' : (editId ? 'Update Product' : 'List Product')}</button>
-                <button type="button" onClick={() => setActiveSection('crops')} className="px-5 py-2.5 rounded-xl border border-dashboard-border text-stone-300 hover:bg-white/5 transition-colors">Cancel</button>
+                <button type="button" onClick={() => setActiveSection('crops')} className="px-5 py-2.5 rounded-xl border border-stone-200 dark:border-dashboard-border text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:bg-white/5 transition-colors">Cancel</button>
               </div>
             </form>
           </div>
@@ -307,8 +308,8 @@ export default function FarmerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Orders Management</h2>
-              <p className="text-stone-400 text-sm">Track and fulfill buyer orders</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Orders Management</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Track and fulfill buyer orders</p>
             </div>
             
             {orders.length === 0 ? (
@@ -320,20 +321,20 @@ export default function FarmerDashboard() {
                     <div className={`absolute left-0 top-0 bottom-0 w-1 ${STATUS_COLORS[o.status].split(' ')[0]}`} />
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
-                        <h3 className="font-bold text-stone-200 text-lg">Order #{o.id}</h3>
+                        <h3 className="font-bold text-stone-700 dark:text-stone-200 text-lg">Order #{o.id}</h3>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${STATUS_COLORS[o.status]}`}>{o.status}</span>
                       </div>
                       <p className="font-medium text-emerald-400 mb-1">{o.product?.title}</p>
-                      <p className="text-sm text-stone-400">Qty: {o.quantity} {o.product?.unit} • Buyer: {o.buyer?.name} ({o.buyer?.phone})</p>
+                      <p className="text-sm text-stone-400 dark:text-stone-500 dark:text-stone-400">Qty: {o.quantity} {o.product?.unit} • Buyer: {o.buyer?.name} ({o.buyer?.phone})</p>
                     </div>
-                    <div className="flex flex-col md:items-end gap-3 border-t md:border-t-0 md:border-l border-dashboard-border pt-4 md:pt-0 md:pl-5">
-                      <div className="text-xl font-display font-bold text-stone-100">₹{o.total_price}</div>
+                    <div className="flex flex-col md:items-end gap-3 border-t md:border-t-0 md:border-l border-stone-200 dark:border-dashboard-border pt-4 md:pt-0 md:pl-5">
+                      <div className="text-xl font-display font-bold text-stone-800 dark:text-stone-100">₹{o.total_price}</div>
                       <select 
                         value={o.status} 
                         onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                        className="bg-white/5 border border-dashboard-border rounded-lg px-3 py-1.5 text-sm text-stone-300 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-dashboard-border rounded-lg px-3 py-1.5 text-sm text-stone-600 dark:text-stone-300 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                       >
-                        {ORDER_STATUS.map(s => <option key={s} value={s} className="bg-dashboard-card">{s}</option>)}
+                        {ORDER_STATUS.map(s => <option key={s} value={s} className="bg-white dark:bg-dashboard-card">{s}</option>)}
                       </select>
                     </div>
                   </div>
@@ -350,8 +351,8 @@ export default function FarmerDashboard() {
               <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-[0_0_30px_rgba(16,185,129,0.15)]">
                 <Brain className="w-8 h-8 text-emerald-400" />
               </div>
-              <h2 className="font-display text-3xl font-bold text-stone-100">AI Crop Advisor</h2>
-              <p className="text-stone-400 mt-2 max-w-lg mx-auto">Enter your soil and climate data to get personalized, AI-driven crop recommendations for maximum yield.</p>
+              <h2 className="font-display text-3xl font-bold text-stone-800 dark:text-stone-100">AI Crop Advisor</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 mt-2 max-w-lg mx-auto">Enter your soil and climate data to get personalized, AI-driven crop recommendations for maximum yield.</p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
@@ -396,34 +397,34 @@ export default function FarmerDashboard() {
               <div className="glass-card p-6 flex flex-col justify-center">
                 {!aiResult && !aiLoading && (
                   <div className="text-center opacity-50">
-                    <Sprout className="w-16 h-16 mx-auto mb-4 text-stone-500" />
-                    <p className="text-stone-400">Run the analysis to see results</p>
+                    <Sprout className="w-16 h-16 mx-auto mb-4 text-stone-400 dark:text-stone-500" />
+                    <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400">Run the analysis to see results</p>
                   </div>
                 )}
                 {aiLoading && (
                   <div className="text-center">
                     <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-stone-400 animate-pulse">Processing ML models...</p>
+                    <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 animate-pulse">Processing ML models...</p>
                   </div>
                 )}
                 {aiResult && (
                   <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-                    <h3 className="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1">Recommended Crop</h3>
+                    <h3 className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">Recommended Crop</h3>
                     <div className="font-display text-4xl font-bold text-emerald-400 capitalize mb-6">{aiResult.recommended_crop}</div>
                     
                     <div className="mb-6">
                       <div className="flex justify-between text-sm mb-1">
-                        <span className="text-stone-400">AI Confidence</span>
-                        <span className="font-bold text-stone-200">{Math.round(aiResult.confidence * 100)}%</span>
+                        <span className="text-stone-400 dark:text-stone-500 dark:text-stone-400">AI Confidence</span>
+                        <span className="font-bold text-stone-700 dark:text-stone-200">{Math.round(aiResult.confidence * 100)}%</span>
                       </div>
-                      <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-2 bg-stone-100 dark:bg-white/5 rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${aiResult.confidence * 100}%` }} className="h-full bg-emerald-500 rounded-full" />
                       </div>
                     </div>
                     
                     <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 mb-4">
                       <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Farming Tip</p>
-                      <p className="text-sm text-stone-300 leading-relaxed">{aiResult.tips}</p>
+                      <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed">{aiResult.tips}</p>
                     </div>
                   </motion.div>
                 )}
@@ -436,21 +437,21 @@ export default function FarmerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Weather & Calendar</h2>
-              <p className="text-stone-400 text-sm">Farm planning tools</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Weather & Calendar</h2>
+              <p className="text-stone-400 dark:text-stone-500 text-sm">Farm planning tools and 7-day forecast</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <WeatherWidget />
-              <div className="glass-card p-6">
-                <h3 className="font-semibold text-stone-200 mb-4">Upcoming Tasks</h3>
-                <div className="space-y-3">
-                  {['Prepare soil for Kharif sowing', 'Schedule irrigation for Plot B', 'Procure seeds for upcoming season'].map((t, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-dashboard-border">
-                      <div className="w-5 h-5 rounded-full border-2 border-stone-500" />
-                      <span className="text-sm text-stone-300">{t}</span>
-                    </div>
-                  ))}
-                </div>
+            
+            <SmartWeatherDashboard />
+
+            <div className="glass-card p-6">
+              <h3 className="font-semibold text-stone-700 dark:text-stone-200 mb-4">Upcoming Tasks</h3>
+              <div className="space-y-3">
+                {['Prepare soil for Kharif sowing', 'Schedule irrigation for Plot B', 'Procure seeds for upcoming season'].map((t, i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 bg-stone-100 dark:bg-white/5 rounded-xl border border-stone-200 dark:border-dashboard-border">
+                    <div className="w-5 h-5 rounded-full border-2 border-stone-500" />
+                    <span className="text-sm text-stone-600 dark:text-stone-300">{t}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -460,8 +461,8 @@ export default function FarmerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Market Prices</h2>
-              <p className="text-stone-400 text-sm">Analyze market trends</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Market Prices</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Analyze market trends</p>
             </div>
             <PriceTrendChart />
           </div>
@@ -471,8 +472,8 @@ export default function FarmerDashboard() {
         return (
           <div className="space-y-6 max-w-4xl mx-auto">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">News & Trends</h2>
-              <p className="text-stone-400 text-sm">Stay updated with agriculture news</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">News & Trends</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Stay updated with agriculture news</p>
             </div>
             <NewsFeed />
           </div>
@@ -482,8 +483,8 @@ export default function FarmerDashboard() {
         return (
           <div className="space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Analytics</h2>
-              <p className="text-stone-400 text-sm">Your performance metrics</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Analytics</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Your performance metrics</p>
             </div>
             <div className="grid lg:grid-cols-2 gap-6">
               <RevenueChart />
@@ -496,8 +497,8 @@ export default function FarmerDashboard() {
         return (
           <div className="max-w-2xl mx-auto space-y-6">
             <div>
-              <h2 className="font-display text-2xl font-bold text-stone-100">Settings</h2>
-              <p className="text-stone-400 text-sm">Manage your profile</p>
+              <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Settings</h2>
+              <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Manage your profile</p>
             </div>
             <form onSubmit={handleSettingsSubmit} className="glass-card p-6 space-y-5">
               <div>

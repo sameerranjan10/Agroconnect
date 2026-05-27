@@ -22,15 +22,15 @@ export default function DashboardLayout({ children, sidebarItems, activeSidebarI
   }, [])
 
   useEffect(() => {
-    // Ensure dark mode body style is active for dashboard
-    document.body.style.backgroundColor = '#0a0f0d'
+    // Ensure dashboard specific body styles if needed (cleanup on unmount)
+    document.body.classList.add('dashboard-active')
     return () => {
-      document.body.style.backgroundColor = ''
+      document.body.classList.remove('dashboard-active')
     }
   }, [])
 
   return (
-    <div className="min-h-screen bg-dashboard-bg text-stone-100 flex overflow-hidden">
+    <div className="min-h-screen bg-stone-50 dark:bg-dashboard-bg text-stone-900 dark:text-stone-100 flex overflow-hidden transition-colors duration-300">
       
       <DashboardSidebar 
         items={sidebarItems}
@@ -52,7 +52,7 @@ export default function DashboardLayout({ children, sidebarItems, activeSidebarI
           user={user}
         />
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-dashboard-bg pt-16 relative dash-scroll">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-stone-50 dark:bg-dashboard-bg pt-16 relative dash-scroll transition-colors duration-300">
           {/* Subtle background grain for texture */}
           <div className="fixed inset-0 pointer-events-none opacity-[0.02] bg-grain z-0"></div>
           

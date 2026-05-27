@@ -1,9 +1,8 @@
-/**
- * AgroConnect - Navbar
- */
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Sun, Moon } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo'
 
 export default function Navbar() {
@@ -27,19 +26,28 @@ export default function Navbar() {
   const handleLogout = () => { logout(); navigate('/') }
 
   const navLink = (to, label) => {
-    const active = location.pathname === to
+    const isHash = to.startsWith('#')
+    const dest = isHash && location.pathname !== '/' ? '/' + to : to
+    const active = location.pathname === to || location.hash === to
+
     return (
-      <Link
-        to={to}
-        className={`block md:inline-block text-base md:text-sm font-medium transition-all duration-150 py-2.5 px-4 md:py-0 md:px-0 rounded-xl md:rounded-none ${
+      <a
+        href={dest}
+        className={`block md:inline-block text-lg md:text-sm font-medium transition-all duration-150 py-3.5 px-4 md:py-0 md:px-0 rounded-xl md:rounded-none cursor-pointer ${
           active
             ? 'text-forest-700 dark:text-forest-400 bg-forest-50/50 dark:bg-forest-900/20 md:bg-transparent md:dark:bg-transparent font-semibold'
             : 'text-stone-600 hover:text-forest-700 dark:text-stone-300 dark:hover:text-forest-400 hover:bg-earth-50 dark:hover:bg-stone-800 md:hover:bg-transparent md:dark:hover:bg-transparent'
         }`}
-        onClick={() => setOpen(false)}
+        onClick={(e) => {
+          setOpen(false)
+          if (!isHash) {
+            e.preventDefault()
+            navigate(to)
+          }
+        }}
       >
         {label}
-      </Link>
+      </a>
     )
   }
 
@@ -59,6 +67,9 @@ export default function Navbar() {
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-6">
             {navLink('/', 'Home')}
+            {navLink('#features', 'Features')}
+            {navLink('#about', 'About Us')}
+            {navLink('#intelligence', 'Intelligence')}
             {navLink('/buyer/dashboard', 'Marketplace')}
             {isAuth && user?.role === 'FARMER' && navLink('/farmer/dashboard', 'Dashboard')}
             {isAuth && navLink('/ai-tools', 'AI Tools')}
@@ -69,10 +80,13 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-stone-600 hover:bg-earth-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors"
+              className="relative p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-600 dark:text-stone-300 transition-all duration-300 group overflow-hidden border border-transparent dark:border-stone-700 hover:shadow-inner"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? '☀️' : '🌙'}
+              <div className="relative z-10 transform transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400 drop-shadow-sm" /> : <Moon className="w-5 h-5 text-indigo-500 drop-shadow-sm" />}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </button>
 
             {isAuth ? (
@@ -102,9 +116,11 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-stone-600 hover:bg-earth-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors"
+              className="relative p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-600 dark:text-stone-300 transition-all duration-300 group overflow-hidden border border-transparent dark:border-stone-700 hover:shadow-inner"
             >
-              {theme === 'dark' ? '☀️' : '🌙'}
+              <div className="relative z-10 transform transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400 drop-shadow-sm" /> : <Moon className="w-5 h-5 text-indigo-500 drop-shadow-sm" />}
+              </div>
             </button>
             <button
               onClick={() => setOpen(!open)}
@@ -119,24 +135,37 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden border-t border-earth-100 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 py-4 space-y-3">
-          {navLink('/', 'Home')}
-          {navLink('/buyer/dashboard', 'Marketplace')}
-          {isAuth && user?.role === 'FARMER' && navLink('/farmer/dashboard', 'Dashboard')}
-          {isAuth && navLink('/ai-tools', 'AI Tools')}
-          <div className="pt-2 border-t border-earth-100 dark:border-stone-800 space-y-2">
-            {isAuth ? (
-              <button onClick={handleLogout} className="w-full btn-secondary text-sm">Logout</button>
-            ) : (
-              <>
-                <Link to="/login"    onClick={() => setOpen(false)} className="block w-full btn-secondary text-sm text-center">Login</Link>
-                <Link to="/register" onClick={() => setOpen(false)} className="block w-full btn-primary  text-sm text-center">Get Started</Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: 'auto' }}
+            exit={{ opacity: 0, y: -20, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden overflow-hidden border-t border-earth-100 dark:border-stone-800 bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl"
+          >
+            <div className="px-4 py-4 space-y-3">
+              {navLink('/', 'Home')}
+              {navLink('#features', 'Features')}
+              {navLink('#about', 'About Us')}
+              {navLink('#intelligence', 'Intelligence')}
+              {navLink('/buyer/dashboard', 'Marketplace')}
+              {isAuth && user?.role === 'FARMER' && navLink('/farmer/dashboard', 'Dashboard')}
+              {isAuth && navLink('/ai-tools', 'AI Tools')}
+              <div className="pt-4 mt-2 border-t border-earth-100 dark:border-stone-800 space-y-3">
+                {isAuth ? (
+                  <button onClick={handleLogout} className="w-full btn-secondary text-base py-3">Logout</button>
+                ) : (
+                  <>
+                    <Link to="/login"    onClick={() => setOpen(false)} className="block w-full btn-secondary text-base py-3 text-center">Login</Link>
+                    <Link to="/register" onClick={() => setOpen(false)} className="block w-full btn-primary  text-base py-3 text-center">Get Started</Link>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

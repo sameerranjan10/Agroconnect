@@ -33,7 +33,7 @@ export default function WelcomeHero({ userName, role }) {
 
       <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white/90 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-black/20 dark:bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white/90 text-xs font-semibold uppercase tracking-wider mb-4">
             <Sparkles className="w-3 h-3 text-emerald-300" />
             {role} Portal
           </div>
