@@ -10,3 +10,8 @@ dist/
 
 # OS
 .DS_Store
+.env
+backend/.env
+frontend/.env
+__pycache__/
+*.pyc
