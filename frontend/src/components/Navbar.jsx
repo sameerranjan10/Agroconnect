@@ -59,8 +59,8 @@ export default function Navbar() {
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-6">
             {navLink('/', 'Home')}
-            {navLink('/marketplace', 'Marketplace')}
-            {isAuth && user?.role === 'FARMER' && navLink('/dashboard', 'Dashboard')}
+            {navLink('/buyer/dashboard', 'Marketplace')}
+            {isAuth && user?.role === 'FARMER' && navLink('/farmer/dashboard', 'Dashboard')}
             {isAuth && navLink('/ai-tools', 'AI Tools')}
           </div>
 
@@ -122,8 +122,8 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t border-earth-100 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 py-4 space-y-3">
           {navLink('/', 'Home')}
-          {navLink('/marketplace', 'Marketplace')}
-          {isAuth && user?.role === 'FARMER' && navLink('/dashboard', 'Dashboard')}
+          {navLink('/buyer/dashboard', 'Marketplace')}
+          {isAuth && user?.role === 'FARMER' && navLink('/farmer/dashboard', 'Dashboard')}
           {isAuth && navLink('/ai-tools', 'AI Tools')}
           <div className="pt-2 border-t border-earth-100 dark:border-stone-800 space-y-2">
             {isAuth ? (

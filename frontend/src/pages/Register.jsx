@@ -31,7 +31,7 @@ export default function Register() {
     try {
       const user = await register(form)
       toast.success(`Welcome to AgroConnect, ${user.name}! 🌱`)
-      navigate(user.role === 'FARMER' ? '/dashboard' : '/marketplace')
+      navigate(user.role === 'FARMER' ? '/farmer/dashboard' : '/buyer/dashboard')
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Registration failed')
     } finally {
@@ -170,7 +170,7 @@ export default function Register() {
                 try {
                   const user = await loginWithGoogle(credentialResponse.credential, form.role)
                   toast.success(`Welcome to AgroConnect, ${user.name}! 🌱`)
-                  navigate(user.role === 'FARMER' ? '/dashboard' : '/marketplace')
+                  navigate(user.role === 'FARMER' ? '/farmer/dashboard' : '/buyer/dashboard')
                 } catch (err) {
                   toast.error('Google registration failed')
                 }

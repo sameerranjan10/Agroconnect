@@ -14,8 +14,8 @@ export default function ProtectedRoute({ children, roles }) {
   }
 
   if (roles && !roles.includes(user?.role)) {
-    // Wrong role — redirect to their home page
-    return <Navigate to={user?.role === 'FARMER' ? '/dashboard' : '/marketplace'} replace />
+    // Wrong role — redirect to their dashboard
+    return <Navigate to={user?.role === 'FARMER' ? '/farmer/dashboard' : '/buyer/dashboard'} replace />
   }
 
   return children

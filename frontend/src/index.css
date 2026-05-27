@@ -69,6 +69,41 @@
   .section-title {
     @apply font-display text-3xl font-bold text-stone-800 dark:text-stone-100;
   }
+
+  /* Dashboard-specific */
+  .glass-card {
+    @apply bg-dashboard-card/80 backdrop-blur-xl border border-dashboard-border rounded-2xl;
+  }
+  .glass-card-hover {
+    @apply glass-card hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300;
+  }
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
+           transition-all duration-200 cursor-pointer;
+  }
+  .sidebar-item-active {
+    @apply bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
+  }
+  .sidebar-item-inactive {
+    @apply text-stone-400 hover:text-emerald-300 hover:bg-white/5;
+  }
+  .glow-border {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.08),
+                inset 0 0 15px rgba(16, 185, 129, 0.03);
+  }
+  .dash-input {
+    @apply w-full bg-white/5 border border-dashboard-border rounded-xl px-4 py-2.5
+           text-stone-200 placeholder-stone-500 focus:outline-none focus:ring-2
+           focus:ring-emerald-500/40 focus:border-emerald-500/30
+           transition-all duration-150;
+  }
+  .dash-label {
+    @apply block text-sm font-medium text-stone-400 mb-1.5;
+  }
+  .skeleton {
+    @apply bg-gradient-to-r from-dashboard-card via-dashboard-hover to-dashboard-card
+           bg-[length:200%_100%] animate-shimmer rounded-xl;
+  }
 }
 
 /* Scrollbar */
@@ -78,6 +113,11 @@
 
 html.dark ::-webkit-scrollbar-track { background: #292524; }
 html.dark ::-webkit-scrollbar-thumb { background: #57534e; }
+
+/* Dashboard scrollbar */
+.dash-scroll::-webkit-scrollbar-track  { background: #111916; }
+.dash-scroll::-webkit-scrollbar-thumb  { background: #1e2e25; border-radius: 3px; }
+.dash-scroll::-webkit-scrollbar-thumb:hover { background: #2a4035; }
 
 /* Page transition */
 .page-enter { animation: slideUp 0.35s ease-out; }

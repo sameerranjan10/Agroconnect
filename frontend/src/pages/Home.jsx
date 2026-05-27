@@ -86,11 +86,11 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             {isAuth ? (
               user?.role === 'FARMER' ? (
-                <Link to="/dashboard" className="btn-primary text-base px-8 py-3">
+                <Link to="/farmer/dashboard" className="btn-primary text-base px-8 py-3">
                   Go to Dashboard →
                 </Link>
               ) : (
-                <Link to="/marketplace" className="btn-primary text-base px-8 py-3">
+                <Link to="/buyer/dashboard" className="btn-primary text-base px-8 py-3">
                   Browse Marketplace →
                 </Link>
               )

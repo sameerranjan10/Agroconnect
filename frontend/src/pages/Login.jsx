@@ -22,7 +22,7 @@ export default function Login() {
     try {
       const user = await login(form.email, form.password)
       toast.success(`Welcome back, ${user.name}! 🌱`)
-      navigate(user.role === 'FARMER' ? '/dashboard' : '/marketplace')
+      navigate(user.role === 'FARMER' ? '/farmer/dashboard' : '/buyer/dashboard')
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Login failed')
     } finally {
@@ -102,7 +102,7 @@ export default function Login() {
                 try {
                   const user = await loginWithGoogle(credentialResponse.credential, 'BUYER')
                   toast.success(`Welcome back, ${user.name}! 🌱`)
-                  navigate(user.role === 'FARMER' ? '/dashboard' : '/marketplace')
+                  navigate(user.role === 'FARMER' ? '/farmer/dashboard' : '/buyer/dashboard')
                 } catch (err) {
                   toast.error('Google login failed')
                 }
