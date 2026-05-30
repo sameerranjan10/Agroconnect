@@ -11,7 +11,8 @@ from app.db.database import Base, engine
 # Import all models so Alembic / create_all sees them
 from app.models import User, Product, Order  # noqa: F401
 
-from app.routes import auth, users, products, orders, ai
+from app.routes import auth, users, products, orders, ai, market
+
 
 # ── Create tables if they don't exist (dev convenience) ──────────────────
 # In production use Alembic migrations instead.
@@ -54,7 +55,7 @@ app.include_router(users.router,    prefix=PREFIX)
 app.include_router(products.router, prefix=PREFIX)
 app.include_router(orders.router,   prefix=PREFIX)
 app.include_router(ai.router,       prefix=PREFIX)
-
+app.include_router(market.router, prefix=PREFIX)
 
 # ── Root health-check ──────────────────────────────────────────────────────
 @app.get("/", tags=["Health"])
