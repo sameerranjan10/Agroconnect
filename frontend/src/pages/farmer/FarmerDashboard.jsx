@@ -67,7 +67,17 @@ export default function FarmerDashboard() {
   const [aiLoading, setAiLoading] = useState(false)
 
   // Settings State
-  const [settingsForm, setSettingsForm] = useState({ name: user?.name || '', phone: user?.phone || '', location: user?.location || '', bio: user?.bio || '' })
+  const [settingsForm, setSettingsForm] = useState({ 
+    name: user?.name || '', 
+    phone: user?.phone || '', 
+    location: user?.location || '', 
+    state: user?.state || '',
+    district: user?.district || '',
+    village: user?.village || '',
+    latitude: user?.latitude || '',
+    longitude: user?.longitude || '',
+    bio: user?.bio || '' 
+  })
 
   const fetchData = useCallback(async () => {
     try {
@@ -154,7 +164,7 @@ export default function FarmerDashboard() {
     e.preventDefault()
     setSaving(true)
     try {
-      const { data } = await usersAPI.updateMe(settingsForm)
+      const { data } = await usersAPI.updateProfile(settingsForm)
       setUser(data)
       toast.success('Profile updated successfully')
     } catch (err) {
@@ -173,20 +183,20 @@ export default function FarmerDashboard() {
           <div className="space-y-6">
             <WelcomeHero userName={user?.name} role="Farmer" />
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               <StatCard icon={TrendingUp} label="Total Revenue" value={totalRevenue || 0} trend="+18%" trendUp={true} color="emerald" />
               <StatCard icon={Sprout} label="Active Crops" value={activeProducts} color="sky" />
               <StatCard icon={Package} label="Pending Orders" value={pendingOrders} trend={pendingOrders > 0 ? "Requires action" : "All clear"} trendUp={pendingOrders === 0} color="amber" />
               <StatCard icon={BarChart3} label="Monthly Growth" value="18.2%" trend="+2.4%" trendUp={true} color="purple" />
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="lg:col-span-2"><RevenueChart /></div>
               <div className="lg:col-span-1"><WeatherWidget /></div>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 glass-card p-6 h-full">
+            <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="lg:col-span-2 glass-card p-4 h-full">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="font-semibold text-stone-700 dark:text-stone-200">Recent Orders</h3>
                   <button onClick={() => setActiveSection('orders')} className="text-sm text-emerald-400 hover:text-emerald-300">View All</button>
@@ -234,9 +244,9 @@ export default function FarmerDashboard() {
             {products.length === 0 ? (
               <EmptyState icon={Sprout} title="No crops listed yet" description="Start selling your produce directly to buyers across India. Add your first product to get started." actionLabel="Add Product" onAction={() => setActiveSection('sell')} />
             ) : (
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 {products.map(p => (
-                  <div key={p.id} className="glass-card-hover p-5 flex flex-col">
+                  <div key={p.id} className="glass-card-hover p-4 flex flex-col">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h3 className="font-semibold text-lg text-stone-800 dark:text-stone-100">{p.title}</h3>
@@ -270,7 +280,7 @@ export default function FarmerDashboard() {
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">List your produce on the marketplace</p>
             </div>
             
-            <form onSubmit={handleProductSubmit} className="glass-card p-6 space-y-5">
+            <form onSubmit={handleProductSubmit} className="glass-card p-4 space-y-5">
               <div>
                 <label className="dash-label">Product Title</label>
                 <input required type="text" className="dash-input" value={productForm.title} onChange={e => setProductForm(f => ({...f, title: e.target.value}))} placeholder="e.g., Organic Basmati Rice" />
@@ -324,7 +334,7 @@ export default function FarmerDashboard() {
             ) : (
               <div className="space-y-4">
                 {orders.map(o => (
-                  <div key={o.id} className="glass-card p-5 flex flex-col md:flex-row md:items-center gap-5 relative overflow-hidden">
+                  <div key={o.id} className="glass-card p-4 flex flex-col md:flex-row md:items-center gap-5 relative overflow-hidden">
                     <div className={`absolute left-0 top-0 bottom-0 w-1 ${STATUS_COLORS[o.status].split(' ')[0]}`} />
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
@@ -362,8 +372,8 @@ export default function FarmerDashboard() {
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 mt-2 max-w-lg mx-auto">Enter your soil and climate data to get personalized, AI-driven crop recommendations for maximum yield.</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
-              <form onSubmit={handleAiSubmit} className="glass-card p-6 space-y-5">
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+              <form onSubmit={handleAiSubmit} className="glass-card p-4 space-y-5">
                 <div>
                   <h4 className="text-sm font-semibold text-emerald-400 mb-3 uppercase tracking-wider">Soil Nutrients</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -401,7 +411,7 @@ export default function FarmerDashboard() {
                 </button>
               </form>
 
-              <div className="glass-card p-6 flex flex-col justify-center">
+              <div className="glass-card p-4 flex flex-col justify-center">
                 {!aiResult && !aiLoading && (
                   <div className="text-center opacity-50">
                     <Sprout className="w-16 h-16 mx-auto mb-4 text-stone-400 dark:text-stone-500" />
@@ -450,7 +460,7 @@ export default function FarmerDashboard() {
             
             <SmartWeatherDashboard />
 
-            <div className="glass-card p-6">
+            <div className="glass-card p-4">
               <h3 className="font-semibold text-stone-700 dark:text-stone-200 mb-4">Upcoming Tasks</h3>
               <div className="space-y-3">
                 {['Prepare soil for Kharif sowing', 'Schedule irrigation for Plot B', 'Procure seeds for upcoming season'].map((t, i) => (
@@ -493,7 +503,7 @@ export default function FarmerDashboard() {
               <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Analytics</h2>
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Your performance metrics</p>
             </div>
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
               <RevenueChart />
               <OrderStatusChart />
             </div>
@@ -507,7 +517,7 @@ export default function FarmerDashboard() {
               <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Settings</h2>
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Manage your profile</p>
             </div>
-            <form onSubmit={handleSettingsSubmit} className="glass-card p-6 space-y-5">
+            <form onSubmit={handleSettingsSubmit} className="glass-card p-4 space-y-5">
               <div>
                 <label className="dash-label">Full Name</label>
                 <input required type="text" className="dash-input" value={settingsForm.name} onChange={e => setSettingsForm(f => ({...f, name: e.target.value}))} />
@@ -518,8 +528,44 @@ export default function FarmerDashboard() {
                   <input type="tel" className="dash-input" value={settingsForm.phone} onChange={e => setSettingsForm(f => ({...f, phone: e.target.value}))} />
                 </div>
                 <div>
-                  <label className="dash-label">Location</label>
-                  <input type="text" className="dash-input" value={settingsForm.location} onChange={e => setSettingsForm(f => ({...f, location: e.target.value}))} />
+                  <label className="dash-label">Village</label>
+                  <input type="text" className="dash-input" value={settingsForm.village} onChange={e => setSettingsForm(f => ({...f, village: e.target.value}))} />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="dash-label">District</label>
+                  <input type="text" className="dash-input" value={settingsForm.district} onChange={e => setSettingsForm(f => ({...f, district: e.target.value}))} />
+                </div>
+                <div>
+                  <label className="dash-label">State</label>
+                  <input type="text" className="dash-input" value={settingsForm.state} onChange={e => setSettingsForm(f => ({...f, state: e.target.value}))} />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-end">
+                <div>
+                  <label className="dash-label">Latitude</label>
+                  <input type="number" step="any" className="dash-input" value={settingsForm.latitude} onChange={e => setSettingsForm(f => ({...f, latitude: e.target.value}))} />
+                </div>
+                <div>
+                  <label className="dash-label">Longitude</label>
+                  <input type="number" step="any" className="dash-input" value={settingsForm.longitude} onChange={e => setSettingsForm(f => ({...f, longitude: e.target.value}))} />
+                </div>
+                <div className="sm:col-span-2">
+                  <button type="button" onClick={() => {
+                    if (navigator.geolocation) {
+                      toast.loading('Fetching location...', { id: 'geo' })
+                      navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                          setSettingsForm(f => ({...f, latitude: pos.coords.latitude, longitude: pos.coords.longitude}))
+                          toast.success('Location fetched!', { id: 'geo' })
+                        },
+                        (err) => toast.error('Failed to get location', { id: 'geo' })
+                      )
+                    }
+                  }} className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-2 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors flex items-center justify-center gap-2 w-full">
+                    📍 Use Current Location
+                  </button>
                 </div>
               </div>
               <div>

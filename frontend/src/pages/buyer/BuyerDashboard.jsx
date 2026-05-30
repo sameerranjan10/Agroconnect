@@ -87,7 +87,7 @@ export default function BuyerDashboard() {
     e.preventDefault()
     setSaving(true)
     try {
-      const { data } = await usersAPI.updateMe(settingsForm)
+      const { data } = await usersAPI.updateProfile(settingsForm)
       setUser(data)
       toast.success('Profile updated successfully')
     } catch (err) {
@@ -135,7 +135,7 @@ export default function BuyerDashboard() {
             {products.length === 0 ? (
               <EmptyState icon={Store} title="No products found" description="Try adjusting your search or category filters." />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                 {(activeSection === 'recommend' ? products.slice(0, 8) : products).map(p => (
                   <div key={p.id} className="glass-card-hover flex flex-col h-full overflow-hidden relative">
                     {activeSection === 'recommend' && (
@@ -185,7 +185,7 @@ export default function BuyerDashboard() {
             {saved.length === 0 ? (
               <EmptyState icon={Heart} title="No saved products" description="Browse the marketplace and click the heart icon to save products here for later." actionLabel="Browse Marketplace" onAction={() => setActiveSection('marketplace')} />
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                 {saved.map(p => (
                   <div key={p.id} className="glass-card p-4 flex gap-4 items-center relative group">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-900/30 to-forest-900/30 flex items-center justify-center shrink-0 border border-stone-200 dark:border-dashboard-border">
@@ -262,7 +262,7 @@ export default function BuyerDashboard() {
             {farmers.length === 0 ? (
               <EmptyState icon={Users} title="No suppliers found" description="Explore the marketplace to find farmers." />
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {farmers.map((f, i) => (
                   <div key={i} className="glass-card-hover p-5 text-center flex flex-col items-center">
                     <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center font-bold text-xl mb-4">
@@ -314,7 +314,7 @@ export default function BuyerDashboard() {
               <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Analytics</h2>
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Your purchasing metrics</p>
             </div>
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
               <RevenueChart title="Spending Overview" />
               <OrderStatusChart />
             </div>
@@ -328,7 +328,7 @@ export default function BuyerDashboard() {
               <h2 className="font-display text-2xl font-bold text-stone-800 dark:text-stone-100">Settings</h2>
               <p className="text-stone-400 dark:text-stone-500 dark:text-stone-400 text-sm">Manage your profile</p>
             </div>
-            <form onSubmit={handleSettingsSubmit} className="glass-card p-6 space-y-5">
+            <form onSubmit={handleSettingsSubmit} className="glass-card p-4 space-y-5">
               <div>
                 <label className="dash-label">Business Name / Full Name</label>
                 <input required type="text" className="dash-input" value={settingsForm.name} onChange={e => setSettingsForm(f => ({...f, name: e.target.value}))} />

@@ -41,9 +41,9 @@ export const authAPI = {
 
 // ── Users ─────────────────────────────────────────────────────────────────
 export const usersAPI = {
-  getMe:    ()     => api.get('/users/me'),
-  updateMe: (data) => api.put('/users/me', data),
-  getUser:  (id)   => api.get(`/users/${id}`),
+  getProfile:    ()     => api.get('/users/me'),
+  updateProfile: (data) => api.put('/users/me', data),
+  getUser:       (id)   => api.get(`/users/${id}`),
 }
 
 // ── Products ──────────────────────────────────────────────────────────────
@@ -70,6 +70,15 @@ export const aiAPI = {
   recommendCrop: (data) => api.post('/ai/recommend-crop', data),
   predictPrice:  (data) => api.post('/ai/predict-price',  data),
   health:        ()     => api.get('/ai/health'),
+}
+
+// ── Market ────────────────────────────────────────────────────────────────
+export const marketAPI = {
+  prices: () => api.get('/market/prices'),
+}
+
+export const weatherAPI = {
+  getDashboard: (lat, lon) => api.get('/weather/', { params: { lat, lon } })
 }
 
 export default api

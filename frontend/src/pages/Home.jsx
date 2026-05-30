@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Globe, Bot, ArrowRight, Brain, Newspaper, AlertTriangle, Landmark } from 'lucide-react'
 import Logo from '../components/Logo'
+import LiveCropForecasting from '../components/dashboard/LiveCropForecasting'
+import LiveWeatherAlerts from '../components/dashboard/LiveWeatherAlerts'
 
 const GithubIcon = ({ className }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -73,7 +75,7 @@ export default function Home() {
     <div className="page-enter">
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28 px-4">
+      <section className="relative overflow-hidden py-12 md:py-28 px-4">
         {/* Background decorations with subtle pulse animations */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <motion.div 
@@ -88,7 +90,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-8">
           
           {/* Left Text Content */}
           <div className="flex-1 text-center lg:text-left z-10">
@@ -161,7 +163,7 @@ export default function Home() {
       </section>
 
       {/* ── Features ─────────────────────────────────────────────────────── */}
-      <section id="features" className="py-16 md:py-24 px-4 relative">
+      <section id="features" className="py-12 md:py-24 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -183,7 +185,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`rounded-3xl bg-gradient-to-br ${f.color} p-6 md:p-8 border border-earth-100 dark:border-stone-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
+                className={`rounded-3xl bg-gradient-to-br ${f.color} p-5 md:p-8 border border-earth-100 dark:border-stone-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
               >
                 <div className="text-4xl mb-4">{f.icon}</div>
                 <span className="badge bg-white dark:bg-stone-800 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700 text-xs mb-3">
@@ -198,8 +200,8 @@ export default function Home() {
       </section>
 
       {/* ── About Us ─────────────────────────────────────────────────────── */}
-      <section id="about" className="py-16 md:py-24 px-4 bg-white/60 dark:bg-stone-900/60 border-y border-earth-100 dark:border-stone-800 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+      <section id="about" className="py-12 md:py-24 px-4 bg-white/60 dark:bg-stone-900/60 border-y border-earth-100 dark:border-stone-800 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
           
           <motion.div 
             initial={{ opacity: 0, x: -40 }}
@@ -259,7 +261,7 @@ export default function Home() {
       </section>
 
       {/* ── AgroConnect Intelligence ─────────────────────────────────────── */}
-      <section id="intelligence" className="py-16 md:py-24 px-4 bg-stone-50 dark:bg-[#0a0f0d] relative overflow-hidden">
+      <section id="intelligence" className="py-12 md:py-24 px-4 bg-stone-50 dark:bg-[#0a0f0d] relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 dark:bg-emerald-900/10 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-6xl mx-auto relative z-10">
@@ -282,64 +284,11 @@ export default function Home() {
           {/* Bento Box Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* AI Insights (Large Card) */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="md:col-span-2 bg-gradient-to-br from-purple-600 to-indigo-800 rounded-3xl p-8 text-white shadow-xl shadow-purple-900/20 flex flex-col justify-between relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 group-hover:scale-110 transition-transform duration-700" />
-              <div>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <Brain className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-display text-2xl font-bold">AI Crop Forecasting</h3>
-                </div>
-                <p className="text-purple-100 text-lg mb-8 max-w-md leading-relaxed">
-                  Based on current El Niño patterns and local soil degradation data, our models predict a <span className="font-bold text-white">14% increase in wheat yield</span> for the northern belt if sown before November 15th.
-                </p>
-              </div>
-              <div className="bg-black/20 backdrop-blur-md rounded-2xl p-5 border border-white/10 flex items-center justify-between">
-                <div>
-                  <div className="text-purple-200 text-sm mb-1">Confidence Score</div>
-                  <div className="text-2xl font-bold">92.4%</div>
-                </div>
-                <button className="bg-white text-purple-700 hover:bg-purple-50 px-5 py-2.5 rounded-xl font-semibold transition-colors text-sm">
-                  Run Full Analysis
-                </button>
-              </div>
-            </motion.div>
+            {/* AI Insights (Large Card) - Now Live! */}
+            <LiveCropForecasting />
 
-            {/* Weather Alerts */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-red-50 dark:bg-red-500/5 border border-red-100 dark:border-red-500/20 rounded-3xl p-6 shadow-lg shadow-red-900/5 flex flex-col"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 rounded-xl">
-                  <AlertTriangle className="w-5 h-5" />
-                </div>
-                <h3 className="font-bold text-stone-800 dark:text-stone-100">Weather Alerts</h3>
-              </div>
-              <div className="space-y-4 flex-1">
-                <div className="bg-white dark:bg-dashboard-surface border border-red-100 dark:border-red-500/10 p-4 rounded-2xl relative overflow-hidden">
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500" />
-                  <div className="text-sm font-bold text-red-600 dark:text-red-400 mb-1">Heavy Rainfall Warning</div>
-                  <div className="text-xs text-stone-500 dark:text-stone-400">Coastal Maharashtra • Next 48 hrs</div>
-                </div>
-                <div className="bg-white dark:bg-dashboard-surface border border-amber-100 dark:border-amber-500/10 p-4 rounded-2xl relative overflow-hidden">
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500" />
-                  <div className="text-sm font-bold text-amber-600 dark:text-amber-400 mb-1">Moderate Heatwave</div>
-                  <div className="text-xs text-stone-500 dark:text-stone-400">Central Rajasthan • Next 3 days</div>
-                </div>
-              </div>
-            </motion.div>
+            {/* Weather Alerts - Now Live! */}
+            <LiveWeatherAlerts />
 
             {/* Latest News */}
             <motion.div 
@@ -380,7 +329,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="md:col-span-2 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 border border-emerald-100 dark:border-emerald-900/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 shadow-lg shadow-emerald-900/5"
+              className="md:col-span-2 bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 border border-emerald-100 dark:border-emerald-900/30 rounded-3xl p-5 md:p-8 flex flex-col md:flex-row items-center gap-6 shadow-lg shadow-emerald-900/5"
             >
               <div className="w-16 h-16 shrink-0 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center">
                 <Landmark className="w-8 h-8" />
@@ -401,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-20 px-4 mb-8 relative">
+      <section className="py-12 px-4 mb-8 relative">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 40 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}

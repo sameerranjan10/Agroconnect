@@ -190,13 +190,13 @@ export default function AITools() {
           {/* Result */}
           <div>
             {!cropResult && !cropLoading && (
-              <div className="card p-8 h-full flex flex-col items-center justify-center text-center">
+              <div className="card p-5 sm:p-8 h-full flex flex-col items-center justify-center text-center">
                 <span className="text-6xl mb-4 opacity-30">🌱</span>
                 <p className="text-stone-400 dark:text-stone-500">Fill in your soil and weather data, then click <strong>Get Recommendation</strong>.</p>
               </div>
             )}
             {cropLoading && (
-              <div className="card p-8 h-full flex flex-col items-center justify-center gap-4">
+              <div className="card p-5 sm:p-8 h-full flex flex-col items-center justify-center gap-4">
                 <div className="text-5xl animate-pulse-slow">🤖</div>
                 <p className="text-stone-500 dark:text-stone-400">AI is analysing your field conditions…</p>
               </div>
@@ -302,13 +302,13 @@ export default function AITools() {
           {/* Result */}
           <div>
             {!priceResult && !priceLoading && (
-              <div className="card p-8 h-full flex flex-col items-center justify-center text-center">
+              <div className="card p-5 sm:p-8 h-full flex flex-col items-center justify-center text-center">
                 <span className="text-6xl mb-4 opacity-30">💰</span>
                 <p className="text-stone-400 dark:text-stone-500">Configure the parameters and click <strong>Predict Price</strong> to get a market estimate.</p>
               </div>
             )}
             {priceLoading && (
-              <div className="card p-8 h-full flex flex-col items-center justify-center gap-4">
+              <div className="card p-5 sm:p-8 h-full flex flex-col items-center justify-center gap-4">
                 <div className="text-5xl animate-pulse-slow">🤖</div>
                 <p className="text-stone-500 dark:text-stone-400">Analysing market data…</p>
               </div>

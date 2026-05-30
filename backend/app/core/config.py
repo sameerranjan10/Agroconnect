@@ -29,6 +29,8 @@ class Settings(BaseSettings):
     # Government/Open Data API
     DATA_GOV_API_KEY: str = ""
 
+    OPENWEATHER_API_KEY: str = ""
+
     @property
     def google_client_id(self) -> str:
         return self.GOOGLE_CLIENT_ID or self.VITE_GOOGLE_CLIENT_ID

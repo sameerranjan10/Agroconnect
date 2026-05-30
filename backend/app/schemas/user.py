@@ -25,10 +25,15 @@ class UserLogin(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    name:     Optional[str] = Field(None, min_length=2, max_length=120)
-    phone:    Optional[str] = None
-    location: Optional[str] = None
-    bio:      Optional[str] = Field(None, max_length=500)
+    name:      Optional[str] = Field(None, min_length=2, max_length=120)
+    phone:     Optional[str] = None
+    location:  Optional[str] = None
+    state:     Optional[str] = None
+    district:  Optional[str] = None
+    village:   Optional[str] = None
+    latitude:  Optional[float] = None
+    longitude: Optional[float] = None
+    bio:       Optional[str] = Field(None, max_length=500)
 
 
 class GoogleLoginRequest(BaseModel):
@@ -45,6 +50,11 @@ class UserOut(BaseModel):
     role:       UserRole
     phone:      Optional[str]
     location:   Optional[str]
+    state:      Optional[str]
+    district:   Optional[str]
+    village:    Optional[str]
+    latitude:   Optional[float]
+    longitude:  Optional[float]
     bio:        Optional[str]
     is_active:  bool
     created_at: datetime

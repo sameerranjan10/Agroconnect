@@ -74,7 +74,7 @@
 
   /* Dashboard-specific */
   .glass-card {
-    @apply bg-white/90 dark:bg-dashboard-card/80 backdrop-blur-xl border border-stone-200 dark:border-dashboard-border rounded-2xl shadow-sm dark:shadow-none transition-colors duration-300;
+    @apply bg-white/90 dark:bg-dashboard-card/80 backdrop-blur-xl border border-stone-200 dark:border-stone-800 rounded-xl shadow-sm transition-colors duration-300;
   }
   .glass-card-hover {
     @apply glass-card hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300;
