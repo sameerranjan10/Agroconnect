@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     # Google OAuth
     GOOGLE_CLIENT_ID: str = ""
     VITE_GOOGLE_CLIENT_ID: str = ""
+    # Government/Open Data API
+    DATA_GOV_API_KEY: str = ""
 
     @property
     def google_client_id(self) -> str:

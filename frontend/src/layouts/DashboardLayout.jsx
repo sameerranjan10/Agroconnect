@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Menu } from 'lucide-react'
 import DashboardSidebar from '../components/dashboard/DashboardSidebar'
 import DashboardNavbar from '../components/dashboard/DashboardNavbar'
+import DockMorph from '../components/dashboard/DockMorph'
 import { useAuth } from '../context/AuthContext'
 
-export default function DashboardLayout({ children, sidebarItems, activeSidebarItem, onSidebarItemClick, pageTitle, pageSubtitle }) {
+export default function DashboardLayout({ children, sidebarItems, dockItems: customDockItems, activeSidebarItem, onSidebarItemClick, pageTitle, pageSubtitle }) {
   const { user } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -29,17 +31,46 @@ export default function DashboardLayout({ children, sidebarItems, activeSidebarI
     }
   }, [])
 
+  // Prepare dock items (top 4 + a "More" menu, or custom items)
+  const dockItems = useMemo(() => {
+    if (customDockItems && customDockItems.length > 0) {
+      return [
+        ...customDockItems,
+        { id: 'more-menu', label: 'More', icon: Menu, isMore: true }
+      ];
+    }
+    if (!sidebarItems || sidebarItems.length === 0) return [];
+    const top4 = sidebarItems.slice(0, 4);
+    return [
+      ...top4,
+      { id: 'more-menu', label: 'More', icon: Menu, isMore: true }
+    ];
+  }, [sidebarItems, customDockItems]);
+
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-dashboard-bg text-stone-900 dark:text-stone-100 flex overflow-hidden transition-colors duration-300">
-      
-      <DashboardSidebar 
-        items={sidebarItems}
-        activeItem={activeSidebarItem}
-        onItemClick={onSidebarItemClick}
-        collapsed={collapsed}
-        onToggleCollapse={() => setCollapsed(!collapsed)}
-        user={user}
-      />
+      <div className="hidden md:block">
+        <DashboardSidebar 
+          items={sidebarItems}
+          activeItem={activeSidebarItem}
+          onItemClick={onSidebarItemClick}
+          collapsed={collapsed}
+          onToggleCollapse={() => setCollapsed(!collapsed)}
+          user={user}
+        />
+      </div>
+
+      {/* Mobile Sidebar Overlay (for when 'More' is clicked) */}
+      <div className="md:hidden">
+        <DashboardSidebar 
+          items={sidebarItems}
+          activeItem={activeSidebarItem}
+          onItemClick={onSidebarItemClick}
+          collapsed={collapsed}
+          onToggleCollapse={() => setCollapsed(!collapsed)}
+          user={user}
+        />
+      </div>
 
       <div 
         className="flex-1 flex flex-col min-h-screen transition-all duration-300 relative"
@@ -50,9 +81,10 @@ export default function DashboardLayout({ children, sidebarItems, activeSidebarI
           subtitle={pageSubtitle}
           onMenuClick={() => setCollapsed(false)}
           user={user}
+          hideHamburgerOnMobile={true}
         />
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-stone-50 dark:bg-dashboard-bg pt-16 relative dash-scroll transition-colors duration-300">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-stone-50 dark:bg-dashboard-bg pt-16 pb-24 md:pb-0 relative dash-scroll transition-colors duration-300">
           {/* Subtle background grain for texture */}
           <div className="fixed inset-0 pointer-events-none opacity-[0.02] bg-grain z-0"></div>
           
@@ -70,6 +102,16 @@ export default function DashboardLayout({ children, sidebarItems, activeSidebarI
             </AnimatePresence>
           </div>
         </main>
+        
+        {/* Android UI / Mobile Dock */}
+        {isMobile && (
+          <DockMorph 
+            items={dockItems}
+            activeItem={activeSidebarItem}
+            onItemClick={onSidebarItemClick}
+            onMoreClick={() => setCollapsed(prev => !prev)}
+          />
+        )}
       </div>
     </div>
   )

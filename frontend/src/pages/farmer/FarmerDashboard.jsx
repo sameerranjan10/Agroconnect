@@ -28,6 +28,13 @@ const SIDEBAR_ITEMS = [
   { id: 'settings',   label: 'Settings',           icon: Settings },
 ]
 
+const DOCK_ITEMS = [
+  SIDEBAR_ITEMS.find(i => i.id === 'dashboard'),
+  SIDEBAR_ITEMS.find(i => i.id === 'news'),
+  SIDEBAR_ITEMS.find(i => i.id === 'ai'),
+  SIDEBAR_ITEMS.find(i => i.id === 'orders'),
+]
+
 const CATEGORIES = ['Grain', 'Vegetable', 'Fruit', 'Cash', 'Pulse', 'Spice', 'Other']
 const UNITS = ['kg', 'quintal', 'tonne', 'litre', 'piece', 'dozen', 'bag']
 const ORDER_STATUS = ['PENDING','CONFIRMED','SHIPPED','DELIVERED','CANCELLED']
@@ -533,6 +540,7 @@ export default function FarmerDashboard() {
   return (
     <DashboardLayout
       sidebarItems={SIDEBAR_ITEMS}
+      dockItems={DOCK_ITEMS}
       activeSidebarItem={activeSection}
       onSidebarItemClick={setActiveSection}
       pageTitle={SIDEBAR_ITEMS.find(i => i.id === activeSection)?.label || 'Dashboard'}

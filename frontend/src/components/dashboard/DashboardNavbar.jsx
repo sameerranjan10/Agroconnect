@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Logo from '../Logo'
 
-export default function DashboardNavbar({ title, subtitle, onMenuClick, user }) {
+export default function DashboardNavbar({ title, subtitle, onMenuClick, user, hideHamburgerOnMobile }) {
   const { logout } = useAuth()
   const navigate = useNavigate()
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark')
@@ -36,9 +36,11 @@ export default function DashboardNavbar({ title, subtitle, onMenuClick, user }) 
     <div className="fixed top-0 left-0 right-0 h-16 bg-white/80 TEMP_PLACEHOLDER_bg-stone-100 dark:bg-dashboard-surface/80 backdrop-blur-xl border-b border-stone-200 dark:border-dashboard-border z-40 flex items-center justify-between px-4 lg:px-8 transition-colors duration-300">
       {/* Left side */}
       <div className="flex items-center gap-4 md:ml-[280px] transition-all duration-300">
-        <button onClick={onMenuClick} className="md:hidden p-2 text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-white hover:bg-stone-100 dark:bg-white/5 rounded-xl">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-        </button>
+        {!hideHamburgerOnMobile && (
+          <button onClick={onMenuClick} className="md:hidden p-2 text-stone-400 dark:text-stone-500 dark:text-stone-400 hover:text-white hover:bg-stone-100 dark:bg-white/5 rounded-xl">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+          </button>
+        )}
         <div className="hidden sm:block">
           <h1 className="font-display text-lg font-bold text-stone-800 dark:text-stone-100">{title}</h1>
           {subtitle && <p className="text-xs text-stone-400 dark:text-stone-500 dark:text-stone-400 font-medium">{subtitle}</p>}
